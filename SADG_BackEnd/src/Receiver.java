@@ -1,8 +1,29 @@
+import java.io.IOException;
+import java.util.concurrent.TimeoutException;
 
-public interface Receiver {
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Consumer;
+import com.rabbitmq.client.DefaultConsumer;
 
-	// 2 personen willen checken of ze hetzelfde liedje hebben: string die komt van het decoderen
-	// van de qr-code versturen via communicatiekanaal en checken of ze juist zijn in de verifier klasse.
-	public abstract void verify(String id1, String id2);
+public class Receiver implements IReceiver {
+	private Connection connection;
+	private Channel channel;
+	
+	public Receiver(String ipaddress) throws IOException, TimeoutException{
+		ConnectionFactory factory = new ConnectionFactory();
+		factory.setHost(ipaddress);
+		connection = factory.newConnection();
+		channel = connection.createChannel();
+		channel.queueDeclare("verify", false, false, false, null);
+		
+	}
+
+	@Override
+	public void verify(String id1, String id2) {
+		// TODO Auto-generated method stub
+
+	}
 
 }

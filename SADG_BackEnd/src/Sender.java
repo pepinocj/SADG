@@ -1,27 +1,59 @@
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.Channel;
 
-public interface Sender {
+public class Sender implements ISender {
+	private Channel channel;
+	private Connection connection;
 
-	// Starten van een nieuwe spelronde waarbij de mogelijkheid er is om elke speelronde
-	// met een subset of een nieuwe set van peeps te spelen. 
-	public abstract void initiateRound(List<Person> persons);
+	public Sender(String ipaddress) throws IOException, TimeoutException{
+		ConnectionFactory factory = new ConnectionFactory();
+	    // Voor testen ipaddress = "localhost"
+		factory.setHost(ipaddress);
+	    // Initialisatie van connection
+	    connection = factory.newConnection();
+	    //Opstellen van channel
+	    channel = connection.createChannel();
+	    //Declaraties van alle queues
+	    channel.queueDeclare("startRound", false, false, false, null);
+	    channel.queueDeclare("musicQueue", false, false, false, null);
+	    channel.queueDeclare("initRound", false, false, false, null);
+	    channel.queueDeclare("stopRound", false, false, false, null);
+	}
 	
-	// Zend de link/index van de te spelen muziek naar de juiste gebruiker.
-	// Gebruikers zijn al eerder doorgegeven in initiateRound(..). Link kan in de vorm van een
-	// string zijn
-	public abstract void sendMusic(Map<Person,Link> music);
-	
-	// Starten van een ronde aka start spelen van muziek over x aantal seconden. 
-	public abstract void startRound(int seconds);
-	
-	//Als laatste nodige match is gevonden (vb na eerste drie matchen stop), zend een
-	// signaal naar alle spelers dat deze ronde stopt, aka laat de muziek stoppen, scorebord
-	// komt tevoorschijn?
-	public abstract void stopRound();
-	
-	//De twee mensen feliciteren die als eerste elkaar gevonden hebben?? Optioneel
-	public abstract void announceWinner(Person p1, Person p2);
-	
+	@Override
+	public void initiateRound(List<Person> persons) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void sendMusic(Map<Person, String> music) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void startRound(int seconds) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void stopRound() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public void announceWinner(Person p1, Person p2) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
