@@ -3,7 +3,8 @@ import java.util.Map;
 
 
 public interface ISender {
-
+	
+	//TODO in receiver een addplayer? en een removeplayer en er zo een mini interface moeten zijn om genre en difficulty te kiezen (en score op te tonen), maar das voor later
 	// Starten van een nieuwe spelronde waarbij de mogelijkheid er is om elke speelronde
 	// met een subset of een nieuwe set van peeps te spelen. 
 	public abstract void initiateRound(List<Person> persons);
@@ -14,7 +15,8 @@ public interface ISender {
 	public abstract void sendMusic(Map<Person,String> music);
 	
 	// Starten van een ronde aka start spelen van muziek over x aantal seconden. 
-	public abstract void startRound(int seconds);
+	//TODO uittesten of dat dan effectief tegelijk begint, anders absoluut tijdstip gebruiken
+	public abstract void startRound(long timeToStart);
 	
 	//Als laatste nodige match is gevonden (vb na eerste drie matchen stop), zend een
 	// signaal naar alle spelers dat deze ronde stopt, aka laat de muziek stoppen, scorebord
