@@ -1,3 +1,4 @@
+package backEnd;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public interface ISender {
 	// Zend de link/index van de te spelen muziek naar de juiste gebruiker.
 	// Gebruikers zijn al eerder doorgegeven in initiateRound(..). Link kan in de vorm van een
 	// string zijn
-	public abstract void sendMusic(Map<Person,String> music);
+	public abstract void sendMusic(Map<String,String> music);
 	
 	// Starten van een ronde aka start spelen van muziek over x aantal seconden. 
 	//TODO uittesten of dat dan effectief tegelijk begint, anders absoluut tijdstip gebruiken

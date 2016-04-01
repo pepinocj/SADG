@@ -1,3 +1,4 @@
+package backEnd;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -33,13 +34,13 @@ public class Sender implements ISender {
 	}
 
 	@Override
-	public void sendMusic(Map<Person, String> music) {
+	public void sendMusic(Map<String, String> music) { //username en songname 
 		// TODO Auto-generated method stub
 
 	}
 
 	@Override
-	public void startRound(int seconds) {
+	public void startRound(long time) {
 		// TODO Auto-generated method stub
 
 	}

@@ -1,3 +1,4 @@
+package backEnd;
 
 import java.util.Map;
 
@@ -7,13 +8,13 @@ public class Game {
 	
 	GameState currentState;
 	GameMode gameMode;
-	SongPicker songPicker;
+	SongAssigner songAssigner;
 	ScoreHandler scoreHandler;
 	ISender sender;
 	
 	public Game (){
 		gameMode = new RegularMode();
-		songPicker = new SongPicker();
+		songAssigner = new SongAssigner();
 		scoreHandler = new ScoreHandler();
 		currentState = new GameState();
 	}
@@ -26,7 +27,7 @@ public class Game {
 	
 	public void startNewRound(){
 		System.out.println("Start new round with assignment:");
-		Map<Person, String> songAssignments = songPicker.pickSongs(gameMode, currentState.getPlayers());
+		Map<String, String> songAssignments = songAssigner.assignSongs(gameMode, currentState);
 		sender.sendMusic(songAssignments);
 		long timeToStart = System.currentTimeMillis(); //hier nog plus 10 seconden doen ofzo
 		sender.startRound(timeToStart);

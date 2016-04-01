@@ -1,16 +1,38 @@
+package backEnd;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
 
+
+
+
+
+
+
 public class GameState {
 
+	
+	public enum Genre {
+	    ALL, POP, HIPOP, DUBSTEP};
+
+	public enum Level {
+		ALL, EASY, MEDIUM, HARD};
+	    
+	    
 	//persons toch hier want bij handlescore moet ge de score vd persons kunnen aanpassen
 	ArrayList<Person> players;
-	Map<Person, String> songAssignments;
+	Map<String, String> songAssignments;
 	long timeStarted;
+	Genre genre;
+	Level level;
+	//add other configuration like level or genre
+	
+	
 	
 	public GameState() {
 		players = new ArrayList<Person>();
+		genre = Genre.ALL;
+		level = Level.ALL;
 	}
 	
 
@@ -26,12 +48,12 @@ public class GameState {
 		this.timeStarted = timeToStart;
 	}
 
-	public Map<Person, String> getSongAssignments() {
+	public Map<String, String> getSongAssignments() {
 		return songAssignments;
 	}
 
-	public void setSongAssignments(Map<Person, String> songAssignments) {
-		this.songAssignments = songAssignments;
+	public void setSongAssignments(Map<String, String> songAssignments2) {
+		this.songAssignments = songAssignments2;
 	}
 	
 	public Map<String, Integer> getScores(){
