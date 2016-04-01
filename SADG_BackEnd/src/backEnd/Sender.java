@@ -8,9 +8,13 @@ import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.Channel;
 
+
 public class Sender implements ISender {
+	private static final String EXCHANGE_NAME = "send_info";
+	
 	private Channel channel;
 	private Connection connection;
+	
 
 	public Sender(String ipaddress) throws IOException, TimeoutException{
 		ConnectionFactory factory = new ConnectionFactory();
@@ -20,23 +24,14 @@ public class Sender implements ISender {
 	    connection = factory.newConnection();
 	    //Opstellen van channel
 	    channel = connection.createChannel();
-	    //Declaraties van alle queues
-	    channel.queueDeclare("startRound", false, false, false, null);
-	    channel.queueDeclare("musicQueue", false, false, false, null);
-	    channel.queueDeclare("initRound", false, false, false, null);
-	    channel.queueDeclare("stopRound", false, false, false, null);
-	}
-	
-	@Override
-	public void initiateRound(List<Person> persons) {
-		// TODO Auto-generated method stub
-
+	    channel.exchangeDeclare(EXCHANGE_NAME, "direct");
 	}
 
 	@Override
-	public void sendMusic(Map<String, String> music) { //username en songname 
-		// TODO Auto-generated method stub
-
+	public void sendMusic(Map<String, String> music) throws IOException { //username en songname 
+		for(Map.Entry<String, String> entry: music.entrySet()){
+			channel.basicPublish(EXCHANGE_NAME, entry.getKey(), null, entry.getValue().getBytes());
+		}
 	}
 
 	@Override
@@ -55,6 +50,19 @@ public class Sender implements ISender {
 	public void announceWinner(Person p1, Person p2) {
 		// TODO Auto-generated method stub
 
+	}
+
+	@Override
+	public void closeCommunication() {
+		// TODO Auto-generated method stub
+		try {
+			channel.close();
+			connection.close();
+		} catch (IOException | TimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 
 }

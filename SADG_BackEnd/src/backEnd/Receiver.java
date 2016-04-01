@@ -2,28 +2,62 @@ package backEnd;
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
-import com.rabbitmq.client.ConnectionFactory;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.Channel;
-import com.rabbitmq.client.Consumer;
-import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.*;
 
 public class Receiver implements IReceiver {
+
+	private static final String EXCHANGE_NAME = "receive_info";
+
 	private Connection connection;
 	private Channel channel;
-	
-	public Receiver(String ipaddress) throws IOException, TimeoutException{
+	private String queueName;
+
+	private Game game;
+
+	public Receiver(String ipaddress, Game game) throws IOException, TimeoutException{
+		this.game = game;
+
 		ConnectionFactory factory = new ConnectionFactory();
 		factory.setHost(ipaddress);
 		connection = factory.newConnection();
 		channel = connection.createChannel();
-		channel.queueDeclare("verify", false, false, false, null);
-		
+
+		//Routing tutorial
+		channel.exchangeDeclare(EXCHANGE_NAME, "direct");
+		queueName = channel.queueDeclare().getQueue();
+
 	}
 
 	@Override
-	public void verify(String id1, String id2) {
-		// TODO Auto-generated method stub
+	public void verify() throws IOException {
+		channel.queueBind(queueName, EXCHANGE_NAME, "verify");
+		Consumer consumer = new DefaultConsumer(channel){
+			@Override
+			public void handleDelivery(String consumerTag, Envelope envelope,
+					AMQP.BasicProperties properties, byte[] body) throws IOException {
+				String two_names = new String(body, "UTF-8");
+				String[] parts = two_names.split(",");
+				game.verifyMatch(parts[0], parts[1]);
+				System.out.println("Received: " + envelope.getRoutingKey() + "with names " + parts[0] + " and " + parts[1] + ".");
+			}
+		};
+		channel.basicConsume(queueName, true, consumer);
+
+	}
+
+	@Override
+	public void newPlayer() throws IOException {
+		channel.queueBind(queueName, EXCHANGE_NAME, "addPlayer");
+		Consumer consumer = new DefaultConsumer(channel){
+			@Override
+			public void handleDelivery(String consumerTag, Envelope envelope,
+					AMQP.BasicProperties properties, byte[] body) throws IOException {
+				String name = new String(body, "UTF-8");
+				game.addPlayer(name);
+				System.out.println("Received: " + envelope.getRoutingKey() + ": " + name + ".");
+			}
+		};
+		channel.basicConsume(queueName, true, consumer);
 
 	}
 

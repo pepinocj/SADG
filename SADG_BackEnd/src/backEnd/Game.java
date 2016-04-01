@@ -1,6 +1,8 @@
 package backEnd;
 
+import java.io.IOException;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 
 
@@ -17,9 +19,17 @@ public class Game {
 		songAssigner = new SongAssigner();
 		scoreHandler = new ScoreHandler();
 		currentState = new GameState();
+		String ipAddress = "localhost";
+		try {
+			sender = new Sender(ipAddress);
+		} catch (IOException | TimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
-	public void addPlayer(Person person){
+	public void addPlayer(String namePerson){
+		Person person = new Person(namePerson);
 		currentState.addPlayer(person);
 		System.out.println("Person " + person.getUserName() + " was added.");
 	}
@@ -28,7 +38,12 @@ public class Game {
 	public void startNewRound(){
 		System.out.println("Start new round with assignment:");
 		Map<String, String> songAssignments = songAssigner.assignSongs(gameMode, currentState);
-		sender.sendMusic(songAssignments);
+		try {
+			sender.sendMusic(songAssignments);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		long timeToStart = System.currentTimeMillis(); //hier nog plus 10 seconden doen ofzo
 		sender.startRound(timeToStart);
 		currentState.setSongAssignments(songAssignments);
