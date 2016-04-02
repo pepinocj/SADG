@@ -16,15 +16,15 @@ public interface ISender {
 	
 	// Starten van een ronde aka start spelen van muziek over x aantal seconden. 
 	//TODO uittesten of dat dan effectief tegelijk begint, anders absoluut tijdstip gebruiken
-	public abstract void startRound(long timeToStart);
+	public abstract void startRound(long timeToStart) throws IOException;
 	
 	//Als laatste nodige match is gevonden (vb na eerste drie matchen stop), zend een
 	// signaal naar alle spelers dat deze ronde stopt, aka laat de muziek stoppen, scorebord
 	// komt tevoorschijn?
-	public abstract void stopRound();
+	public abstract void stopRound() throws IOException;
 	
 	//De twee mensen feliciteren die als eerste elkaar gevonden hebben?? Optioneel
-	public abstract void announceWinner(Person p1, Person p2);
+	public abstract void announceWinner(Person p1, Person p2) throws IOException;
 	
 	
 	
