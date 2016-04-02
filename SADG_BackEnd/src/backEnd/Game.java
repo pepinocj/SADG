@@ -38,14 +38,16 @@ public class Game {
 	public void startNewRound(){
 		System.out.println("Start new round with assignment:");
 		Map<String, String> songAssignments = songAssigner.assignSongs(gameMode, currentState);
+		long timeToStart = System.currentTimeMillis(); //hier nog plus 10 seconden doen ofzo
 		try {
 			sender.sendMusic(songAssignments);
+			
+			sender.startRound(timeToStart);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		long timeToStart = System.currentTimeMillis(); //hier nog plus 10 seconden doen ofzo
-		sender.startRound(timeToStart);
+		
 		currentState.setSongAssignments(songAssignments);
 		currentState.setStartTime(timeToStart); 
 		System.out.println("Start groovin'!");
