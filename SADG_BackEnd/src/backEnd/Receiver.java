@@ -6,7 +6,7 @@ import com.rabbitmq.client.*;
 
 public class Receiver implements IReceiver {
 
-	private static final String EXCHANGE_NAME = "receive_info";
+	private static final String EXCHANGE_NAME = "receive_game";
 
 	private Connection connection;
 	private Channel channel;
@@ -59,6 +59,17 @@ public class Receiver implements IReceiver {
 		};
 		channel.basicConsume(queueName, true, consumer);
 
+	}
+
+	@Override
+	public void closeCommunication() {
+		try {
+			channel.close();
+			connection.close();
+		} catch (IOException | TimeoutException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

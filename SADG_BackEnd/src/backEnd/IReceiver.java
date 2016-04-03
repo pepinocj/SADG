@@ -11,4 +11,5 @@ public interface IReceiver {
 	//Nieuwe speler die wilt meedoen
 	public abstract void newPlayer() throws IOException;
 
+	public abstract void closeCommunication();
 }

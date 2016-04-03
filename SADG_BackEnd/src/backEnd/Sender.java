@@ -11,7 +11,7 @@ import com.rabbitmq.client.Channel;
 
 
 public class Sender implements ISender {
-	private static final String EXCHANGE_NAME = "send_info";
+	private static final String EXCHANGE_NAME = "send_game";
 
 	private Channel channel;
 	private Connection connection;
