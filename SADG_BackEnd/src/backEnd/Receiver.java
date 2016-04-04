@@ -6,7 +6,7 @@ import com.rabbitmq.client.*;
 
 public class Receiver implements IReceiver {
 
-	private static final String EXCHANGE_NAME = "receive_game";
+	private static final String EXCHANGE_NAME = "game_info";
 
 	private Connection connection;
 	private Channel channel;

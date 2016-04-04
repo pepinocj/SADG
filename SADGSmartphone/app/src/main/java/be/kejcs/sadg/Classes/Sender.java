@@ -1,5 +1,9 @@
 package be.kejcs.sadg.Classes;
 
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
 import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
@@ -7,7 +11,7 @@ import java.util.concurrent.TimeoutException;
  * Created by Karen on 3/04/2016.
  */
 public class Sender implements  ISender{
-    private static final String EXCHANGE_NAME = "receive_user";
+    private static final String EXCHANGE_NAME = "game_info";
 
     private Channel channel;
     private Connection connection;
@@ -17,7 +21,7 @@ public class Sender implements  ISender{
     public Sender(String ipAdress, String user) throws IOException, TimeoutException {
         ConnectionFactory factory = new ConnectionFactory();
         // Voor testen ipaddress = "localhost"
-        factory.setHost(ipaddress);
+        factory.setHost(ipAdress);
         // Initialisatie van connection
         connection = factory.newConnection();
         //Opstellen van channel
@@ -27,12 +31,18 @@ public class Sender implements  ISender{
     }
     @Override
     public void sendVerify(String id1, String id2) throws IOException {
-
+        String message = id1+","+id2;
+        channel.basicPublish(EXCHANGE_NAME, "verify", null, message.getBytes());
     }
 
     @Override
     public void beginAsPlayer(String id) throws IOException {
-
+        if (idUser == id) {
+            channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, id.getBytes());
+        }
+        else{
+            idUser = id;
+        }
     }
 
     @Override

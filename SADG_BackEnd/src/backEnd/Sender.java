@@ -11,7 +11,7 @@ import com.rabbitmq.client.Channel;
 
 
 public class Sender implements ISender {
-	private static final String EXCHANGE_NAME = "send_game";
+	private static final String EXCHANGE_NAME = "game_info";
 
 	private Channel channel;
 	private Connection connection;
@@ -36,7 +36,8 @@ public class Sender implements ISender {
 	@Override
 	public void sendMusic(Map<String, String> music) throws IOException { //username en songname 
 		for(Map.Entry<String, String> entry: music.entrySet()){
-			channel.basicPublish(EXCHANGE_NAME, entry.getKey(), null, entry.getValue().getBytes());
+			String designatedChannel = entry.getKey() + "music";
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, entry.getValue().getBytes());
 			userIds.add(entry.getKey());
 		}
 	}
@@ -45,7 +46,8 @@ public class Sender implements ISender {
 	public void startRound(long time) throws IOException {
 		String timeToString = String.valueOf(time);
 		for(String id: userIds){
-			channel.basicPublish(EXCHANGE_NAME, id, null, timeToString.getBytes());
+			String designatedChannel = id + "time";
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, timeToString.getBytes());
 		}
 	}
 
@@ -53,7 +55,8 @@ public class Sender implements ISender {
 	public void stopRound() throws IOException {
 		String timeToStop = "stop";
 		for(String id: userIds){
-			channel.basicPublish(EXCHANGE_NAME, id, null, timeToStop.getBytes());
+			String designatedChannel = id + "stop";
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, timeToStop.getBytes());
 		}
 	}
 
@@ -63,10 +66,12 @@ public class Sender implements ISender {
 		String nope = "Better luck in the next round!";
 		for(String id: userIds){
 			if(p1.getUserName() == id || p2.getUserName() == id){
-				channel.basicPublish(EXCHANGE_NAME, id, null, congrats.getBytes());
+				String designatedChannel = id + "results";
+				channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, congrats.getBytes());
 			}
 			else{
-				channel.basicPublish(EXCHANGE_NAME, id, null, nope.getBytes());
+				String designatedChannel = id + "results";
+				channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, nope.getBytes());
 			}
 		}
 	}
