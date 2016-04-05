@@ -1,95 +1,109 @@
 package be.kejcs.sadg;
 
+import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
+import java.util.Calendar;
+import java.util.Random;
+
+import be.kejcs.sadg.Classes.DanceGame;
+import be.kejcs.sadg.Classes.JukeBox;
+import be.kejcs.sadg.Classes.Music;
+import be.kejcs.sadg.Classes.Player;
+import be.kejcs.sadg.Classes.QRModule;
 
 public class MainActivity extends AppCompatActivity {
 
-    MediaPlayer player;
+    MediaPlayer mplayer;
 
-    private Button buttonExample;
-    private Button buttonTimeLine;
-    private Button buttonEvents;
-    private Button buttonQuestionnaire;
-    private Button buttonDiary;
+    static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
+
+    private Button buttonPlayNow;
+    private Button buttonPlayDelay;
+    private Button buttonStop;
+
+
+    private Player player;
+
+    private DanceGame danceGame;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttonExample = (Button) findViewById(R.id.buttonExample);
-        buttonTimeLine = (Button) findViewById(R.id.buttonTimeLine);
-        buttonEvents = (Button) findViewById(R.id.buttonEvents);
-        buttonDiary = (Button) findViewById(R.id.buttonDiary);
-        buttonQuestionnaire = (Button) findViewById(R.id.buttonQuestionnaire);
-        //player = MediaPlayer.create(MainActivity.this,R.raw.drake);
+        buttonPlayNow = (Button) findViewById(R.id.buttonPlayNow);
+        buttonPlayDelay = (Button) findViewById(R.id.buttonPlayDelay);
+        buttonStop = (Button) findViewById(R.id.buttonStop);
+
         setOnButtonClickListeners();
+
+        ((ImageView) findViewById(R.id.imageViewQR)).setImageBitmap(QRModule.getQRBitmap("TEST"));
+        this.danceGame = new DanceGame(this);
+
+
+
+
     }
 
-    private void genericListenerBinder(final Button b,final Class c){
 
-        b.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View v) {
-                b.setEnabled(false);
-                Intent intent = new Intent(getApplicationContext(), c);
-                startActivity(intent);
-            }
-        });
-    }
 
     private void setOnButtonClickListeners() {
 
         //genericListenerBinder(buttonExample,ExampleActivity.class);
         //genericListenerBinder(buttonEvents,EventActivity.class);
 
-        buttonExample.setOnClickListener(new View.OnClickListener() {
+        buttonPlayNow.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 //buttonExample.setEnabled(false);
-                player = MediaPlayer.create(MainActivity.this,R.raw.drake);
-                player.seekTo(50000);
-                player.start();
+                Random gen = new Random();
+
+                int song = gen.nextInt(4);
+                danceGame.playSong(song);
+
+
             }
         });
 
-        buttonTimeLine.setOnClickListener(new View.OnClickListener() {
+        buttonPlayDelay.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 //buttonTimeLine.setEnabled(false);
-                player.pause();
+
+                Calendar t = Calendar.getInstance();
+                t.setTimeInMillis(t.getTimeInMillis()+30000);
+                danceGame.playSongAt(0, t);
             }
         });
 
 
-        buttonEvents.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                //buttonExample.setEnabled(false);
-                player = MediaPlayer.create(MainActivity.this,R.raw.dawin);
-                player.seekTo(50000);
-                player.start();
-            }
-        });
-
-        buttonQuestionnaire.setOnClickListener(new View.OnClickListener() {
+        buttonStop.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 //buttonTimeLine.setEnabled(false);
-                player.pause();
+
+                danceGame.stopPlayingMusic();
             }
         });
 
@@ -100,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        buttonExample.setEnabled(true);
+
     }
 
     @Override
@@ -125,6 +139,21 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
+        }
+    }
+
+    public void scanQR(View v) {
+
+            IntentIntegrator intentIntegrator = new IntentIntegrator(this); // where this is activity
+            intentIntegrator.initiateScan(IntentIntegrator.QR_CODE_TYPES); // or QR_CODE_TYPES if you need to scan QR
+
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanResult != null) {
+            Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
+
         }
     }
 }

@@ -15,8 +15,9 @@ public class Receiver implements IReceiver {
     private Connection connection;
     private String queueName;
     private String userId;
+    private DanceGame danceGame;
 
-    public Receiver(String ipaddress, String userId) throws IOException, TimeoutException{
+    public Receiver(String ipaddress, String userId,DanceGame danceGame) throws IOException, TimeoutException{
         ConnectionFactory factory = new ConnectionFactory();
         // Voor testen ipaddress = "localhost"
         factory.setHost(ipaddress);
@@ -27,6 +28,7 @@ public class Receiver implements IReceiver {
         channel.exchangeDeclare(EXCHANGE_NAME, "direct");
         queueName = channel.queueDeclare().getQueue();
         this.userId = userId;
+        this.danceGame = danceGame;
     }
 
     @Override

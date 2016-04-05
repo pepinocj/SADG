@@ -1,8 +1,11 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="be.kejcs.sadg">
 
+
     <application android:name="be.kejcs.sadg.SleepJournalApp" android:allowBackup="true" android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme">
+        <uses-permission android:name="android.permission.CAMERA" />
+
         <activity android:name="be.kejcs.sadg.MainActivity"
             android:label="@string/math_game">
             <!-- The intent-filter below makes sure this activity is launched when launching the app -->

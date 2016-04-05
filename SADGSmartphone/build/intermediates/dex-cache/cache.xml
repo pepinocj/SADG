@@ -2,53 +2,18 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jar="C:\Users\Josi\.gradle\caches\modules-2\files-2.1\com.google.zxing\core\3.2.0\e019d15a13a9786f881141d2df6654b8510bce8b\core-3.2.0.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\pre-dexed\debug\classes-cfb4999bf3b640e754e8a72fa6d26b0346e3d42c.jar" />
+        sha1="e019d15a13a9786f881141d2df6654b8510bce8b">
+        <dex dex="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\pre-dexed\debug\core-3.2.0-c0dcf123434455d86472a19ad801117150812935.jar" />
     </item>
     <item
-        jar="C:\Users\Josi\Bureaublad\jhoobergs-AndroidForBeginners-0e37d98\jhoobergs-AndroidForBeginners-0e37d98\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jar="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\exploded-aar\com.journeyapps\zxing-android-embedded\3.0.2\jars\classes.jar"
         jumboMode="false"
         revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="C:\Users\Josi\Bureaublad\jhoobergs-AndroidForBeginners-0e37d98\jhoobergs-AndroidForBeginners-0e37d98\app\build\intermediates\pre-dexed\debug\classes-18ec772e032868cf70d8cd7b13ac813c8a669ffc.jar" />
-    </item>
-    <item
-        jar="C:\Users\Josi\Bureaublad\jhoobergs-AndroidForBeginners-0e37d98\jhoobergs-AndroidForBeginners-0e37d98\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="C:\Users\Josi\Bureaublad\jhoobergs-AndroidForBeginners-0e37d98\jhoobergs-AndroidForBeginners-0e37d98\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-de7de28c38c6e45e398475cca68178cfef3be73f.jar" />
-    </item>
-    <item
-        jar="C:\Users\Josi\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
-        <dex dex="C:\Users\Josi\Bureaublad\jhoobergs-AndroidForBeginners-0e37d98\jhoobergs-AndroidForBeginners-0e37d98\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-784982e0fb1640a4c265b4e1fb52fbfb92c2e748.jar" />
-    </item>
-    <item
-        jar="C:\Users\Josi\Bureaublad\jhoobergs-AndroidForBeginners-0e37d98\jhoobergs-AndroidForBeginners-0e37d98\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
-        <dex dex="C:\Users\Josi\Bureaublad\jhoobergs-AndroidForBeginners-0e37d98\jhoobergs-AndroidForBeginners-0e37d98\app\build\intermediates\pre-dexed\debug\classes-9025327ce36d5065090963ab496a14cf7875bfe7.jar" />
-    </item>
-    <item
-        jar="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
-        <dex dex="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-1b14cc4f0aa0d968cffd8735f173d29e9625d2bc.jar" />
-    </item>
-    <item
-        jar="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
-        <dex dex="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\pre-dexed\debug\classes-3a437d78020b86c544952383fbc67cc2396d1c70.jar" />
+        sha1="744a4b394a9a7db8a4c4680836d8544802a9cd64">
+        <dex dex="C:\Users\Josi\Documents\KUL\Capita Selecta\SADG\SADG\SADGSmartPhone\app\build\intermediates\pre-dexed\debug\classes-805061f2fea8a696613dd00df485b133338b197d.jar" />
     </item>
 
 </items>

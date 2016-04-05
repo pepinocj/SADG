@@ -17,6 +17,13 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+    }
+
+
 }
 
 dependencies {
@@ -28,4 +35,6 @@ dependencies {
     compile files('lib/junit.jar')
     compile files('lib/rabbitmq-client.jar')
     compile files('lib/rabbitmq-client-tests.jar')
+    compile 'com.journeyapps:zxing-android-embedded:3.0.2@aar'
+    compile 'com.google.zxing:core:3.2.0'
 }
