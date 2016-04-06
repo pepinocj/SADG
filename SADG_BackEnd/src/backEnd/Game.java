@@ -3,16 +3,22 @@ package backEnd;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
-
+import java.util.Scanner;
+ 
 
 
 public class Game {
+	
+	
 	
 	GameState currentState;
 	GameMode gameMode;
 	SongAssigner songAssigner;
 	ScoreHandler scoreHandler;
 	ISender sender;
+	
+	int successCount; 
+	int maxSuccessCount;
 	
 	public Game (){
 		gameMode = new RegularMode();
@@ -28,6 +34,34 @@ public class Game {
 		}
 	}
 	
+	
+	
+	
+	 
+
+	
+	
+	
+	public void quitGame() {
+		// TODO 
+		sender.closeCommunication();
+	}
+
+
+
+
+	public void startGame() {
+		// TODO Auto-generated method stub
+		
+		
+		
+	}
+
+
+
+
+
+	
 	public void addPlayer(String namePerson){
 		Person person = new Person(namePerson);
 		currentState.addPlayer(person);
@@ -41,7 +75,6 @@ public class Game {
 		long timeToStart = System.currentTimeMillis(); //hier nog plus 10 seconden doen ofzo
 		try {
 			sender.sendMusic(songAssignments);
-			
 			sender.startRound(timeToStart);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -53,9 +86,32 @@ public class Game {
 		System.out.println("Start groovin'!");
 	}
 	
-	public boolean verifyMatch(String pers1, String pers2){
-		return scoreHandler.handleScore(gameMode, pers1, pers2, currentState);	
-	}	
+	public void verifyMatch(String pers1, String pers2){
+		boolean success = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
+		if(success){ successCount++ ;}
+		sender.reportVerification(pers1, pers2, success);
+		
+		if(successCount >= maxSuccessCount){
+			String leader = getLeader();
+			sender.announceWinner(leader);
+		}
+	}
+		
+	private String getLeader(){
+		Map<String, Integer> scores = currentState.getScores();
+		int highScore = 0;
+		String leader = "nobody";
+		
+		for (Map.Entry<String, Integer> entry : scores.entrySet())
+		{
+		   if(entry.getValue()>highScore){
+			   leader = entry.getKey();
+			   highScore = entry.getValue();
+		   }
+		}
+		return leader;
+	}
+	
 	
 	public Map<String, Integer> getScores(){
 		return currentState.getScores();
