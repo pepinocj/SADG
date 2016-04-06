@@ -10,17 +10,13 @@ public class Main {
 	private static Game game;
 	private static Receiver receiver;
 	
+	
 	public static void main (String[] args)
 	  {
-		
 		game = new Game();
-		try {
-			receiver = new Receiver("localhost", game);
-		} catch (IOException | TimeoutException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
+
+		receiver = new Receiver("localhost", game);
+	
 	    // create a scanner so we can read the command-line input
 	    Scanner scanner = new Scanner(System.in);
 

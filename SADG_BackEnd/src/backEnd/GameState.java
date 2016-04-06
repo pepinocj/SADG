@@ -37,7 +37,8 @@ public class GameState {
 	
 
 	public void addPlayer(Person person){
-		players.add(person);
+		if(players.contains(person)){System.out.println("EXCEPTION die nog gethrowed moet worden.Speler bestaat al");}
+		players.add(person); //TODO fix this
 	}
 	
 	public ArrayList<Person> getPlayers(){
