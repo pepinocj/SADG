@@ -8,8 +8,8 @@ public class SongAssigner {
 	SongPicker songPicker = new SongPicker();
 
 	public Map<String, String> assignSongs(GameMode gameMode, GameState gameState) {
-		System.out.println("oei overloading");
-		return null;
+		
+		return gameMode.assignSongs(songPicker, gameState);
 	}
 	
 	public Map<String, String> assignSongs(RegularMode gameMode, GameState gameState) {
@@ -24,6 +24,7 @@ public class SongAssigner {
 	}
 	
 	//rekent effe op oneven aantal mensen
+	//TODO verplaats naar MolMode
 	public Map<String, String> assignSongs(MolMode gameMode, GameState gameState) {
 		ArrayList<Person> players = gameState.getPlayers();
 

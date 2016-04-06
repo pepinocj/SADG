@@ -1,6 +1,8 @@
 package backEnd;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Random;
 
 import backEnd.GameState.Genre;
 import backEnd.GameState.Level;
@@ -8,7 +10,7 @@ import backEnd.GameState.Level;
 
 public class SongPicker {
 
-	ArrayList<String> availableSongs = (ArrayList<String>) Arrays.asList("0", "1", "2","3", "4");
+	List<String> availableSongs =  Arrays.asList("0", "1", "2","3", "4");
 	
 	public SongPicker(){
 		//availableSongs.add("Dessert");
@@ -19,6 +21,7 @@ public class SongPicker {
 	public ArrayList<String> pickSongs(int nbOfSongsNeeded, Level level, Genre genre) {
 		ArrayList<String> result = new ArrayList<String>();
 		ArrayList<String> temp = new ArrayList<String>();
+		temp.addAll(availableSongs);
 		if(temp.size() < nbOfSongsNeeded){ //TODO zorgen dat er gewoon genoeg liedjes zijn
 			Math.ceil(temp.size()/nbOfSongsNeeded);
 		}
@@ -26,7 +29,9 @@ public class SongPicker {
 		int i = 0;
 		while(i<= nbOfSongsNeeded){
 			int size = temp.size();
-			int random = (int) Math.random()*size;
+			System.out.println(size);
+			Random r = new Random();
+			int random = r.nextInt(size);
 			result.add(temp.get(random));
 			temp.remove(random);
 			i++;

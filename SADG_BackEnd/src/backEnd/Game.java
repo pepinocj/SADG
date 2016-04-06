@@ -52,7 +52,7 @@ public class Game {
 	public void startGame() {
 		// TODO Auto-generated method stub
 		
-		
+		startNewRound();
 		
 	}
 
