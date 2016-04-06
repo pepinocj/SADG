@@ -26,7 +26,7 @@ public interface ISender {
 	//De twee mensen feliciteren die als eerste elkaar gevonden hebben?? Optioneel
 	public abstract void announceWinner(Person p1, Person p2) throws IOException;
 	
-	
+	public abstract void reportVerification(String id1, String id2, boolean stateOfSuccess) throws IOException;
 	
 	//Eenmaal spelen gedaan is: sluiten van communicatie
 	public abstract void closeCommunication();
