@@ -61,11 +61,11 @@ public class Sender implements ISender {
 	}
 
 	@Override
-	public void announceWinner(Person p1, Person p2) throws IOException {
+	public void announceWinner(String p1, String p2) throws IOException {
 		String congrats = "Congratulations! You won this round!";
 		String nope = "The round is finished!";
 		for(String id: userIds){
-			if(p1.getUserName() == id || p2.getUserName() == id){
+			if(p1 == id || p2 == id){
 				String designatedChannel = id + "results";
 				channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, congrats.getBytes());
 			}
