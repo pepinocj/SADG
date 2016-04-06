@@ -23,7 +23,7 @@ public interface ISender {
 	// komt tevoorschijn?
 	public abstract void stopRound() throws IOException;
 	
-	//De twee mensen feliciteren die als eerste elkaar gevonden hebben?? Optioneel
+	//Winner van de ronde announcen
 	public abstract void announceWinner(String person) throws IOException;
 	
 	public abstract void reportVerification(String id1, String id2, boolean stateOfSuccess) throws IOException;
