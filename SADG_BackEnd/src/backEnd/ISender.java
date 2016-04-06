@@ -23,10 +23,13 @@ public interface ISender {
 	// komt tevoorschijn?
 	public abstract void stopRound() throws IOException;
 	
-	//De twee mensen feliciteren die als eerste elkaar gevonden hebben?? Optioneel
-	public abstract void announceWinner(Person p1, Person p2) throws IOException;
+	//Winner van de ronde announcen
+	public abstract void announceWinner(String person) throws IOException;
 	
+	//TODO announce mol match! implementeer aub
+	public abstract void reportMolVerification(String mol, String victim) throws IOException;
 	
+	public abstract void reportVerification(String id1, String id2, boolean stateOfSuccess) throws IOException;
 	
 	//Eenmaal spelen gedaan is: sluiten van communicatie
 	public abstract void closeCommunication();
