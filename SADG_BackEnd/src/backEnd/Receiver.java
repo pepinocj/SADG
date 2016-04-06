@@ -18,7 +18,7 @@ public class Receiver implements IReceiver {
 
 	private Game game;
 
-	private Thread receiveThread;
+	public Thread receiveThread;
 
 
 	public Receiver(String ipaddress, Game game){

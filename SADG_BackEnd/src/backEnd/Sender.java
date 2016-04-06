@@ -108,4 +108,14 @@ public class Sender implements ISender {
 		}
 	}
 
+	@Override
+	public void reportMolVerification(String mol, String victim) throws IOException {
+			String congrats = "Congrats, you deceived someone";
+			String designatedChannel1 = mol + ".verifyResults";
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel1, null, congrats.getBytes());
+			String oeps = "You were fooled!";
+			String designatedChannel2 = victim + ".verifyResults";
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel2, null, oeps.getBytes());
+	}
+
 }
