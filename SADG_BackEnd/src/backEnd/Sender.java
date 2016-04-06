@@ -36,7 +36,7 @@ public class Sender implements ISender {
 	@Override
 	public void sendMusic(Map<String, String> music) throws IOException { //username en songname 
 		for(Map.Entry<String, String> entry: music.entrySet()){
-			String designatedChannel = entry.getKey() + "music";
+			String designatedChannel = entry.getKey() + ".music";
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, entry.getValue().getBytes());
 			userIds.add(entry.getKey());
 		}
@@ -46,7 +46,7 @@ public class Sender implements ISender {
 	public void startRound(long time) throws IOException {
 		String timeToString = String.valueOf(time);
 		for(String id: userIds){
-			String designatedChannel = id + "start";
+			String designatedChannel = id + ".start";
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, timeToString.getBytes());
 		}
 	}
@@ -55,7 +55,7 @@ public class Sender implements ISender {
 	public void stopRound() throws IOException {
 		String timeToStop = "stop";
 		for(String id: userIds){
-			String designatedChannel = id + "stop";
+			String designatedChannel = id + ".stop";
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, timeToStop.getBytes());
 		}
 	}
@@ -66,11 +66,11 @@ public class Sender implements ISender {
 		String nope = "The round is finished, but you are not first. Better luck next time!";
 		for(String id: userIds){
 			if(person == id ){
-				String designatedChannel = id + "results";
+				String designatedChannel = id + ".results";
 				channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, congrats.getBytes());
 			}
 			else{
-				String designatedChannel = id + "results";
+				String designatedChannel = id + ".results";
 				channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, nope.getBytes());
 			}
 		}
@@ -78,13 +78,11 @@ public class Sender implements ISender {
 
 	@Override
 	public void closeCommunication() {
-		// TODO Auto-generated method stub
 		try {
 			userIds.clear();
 			channel.close();
 			connection.close();
 		} catch (IOException | TimeoutException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -95,16 +93,16 @@ public class Sender implements ISender {
 			boolean stateOfSuccess) throws IOException {
 		if(stateOfSuccess){
 			String congrats = "Congrats, you found your partner!";
-			String designatedChannel1 = id1 + "verifyResults";
-			String designatedChannel2 = id2 + "verifyResults";
+			String designatedChannel1 = id1 + ".verifyResults";
+			String designatedChannel2 = id2 + ".verifyResults";
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel1, null, congrats.getBytes());
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel2, null, congrats.getBytes());
 			
 		}
 		else{
 			String oeps = "This is not the right partner!";
-			String designatedChannel1 = id1 + "verifyResults";
-			String designatedChannel2 = id2 + "verifyResults";
+			String designatedChannel1 = id1 + ".verifyResults";
+			String designatedChannel2 = id2 + ".verifyResults";
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel1, null, oeps.getBytes());
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel2, null, oeps.getBytes());
 		}
