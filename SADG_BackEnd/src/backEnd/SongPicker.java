@@ -1,5 +1,6 @@
 package backEnd;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 import backEnd.GameState.Genre;
 import backEnd.GameState.Level;
@@ -7,11 +8,11 @@ import backEnd.GameState.Level;
 
 public class SongPicker {
 
-	ArrayList<String> availableSongs = new ArrayList<String>();
+	ArrayList<String> availableSongs = (ArrayList<String>) Arrays.asList("0", "1", "2","3", "4");
 	
 	public SongPicker(){
-		availableSongs.add("Dessert");
-		availableSongs.add("Hotline Bling");
+		//availableSongs.add("Dessert");
+		//availableSongs.add("Hotline Bling");
 	}
 
 	//Aanname dat er meer liedjes zijn dan er nodig zijn

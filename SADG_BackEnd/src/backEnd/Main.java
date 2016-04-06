@@ -24,7 +24,9 @@ public class Main {
 
 	    System.out.println("Write \"start\" when all users are added to start the game.");
 	    System.out.println("Write \"quit\" to quit the game.");
-
+	    
+	    receiver.receiveThread.start();
+	    
 	    // get their input as a String
 	    while(true){
 		    String command = scanner.next().toLowerCase();
