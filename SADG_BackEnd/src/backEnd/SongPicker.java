@@ -28,7 +28,7 @@ public class SongPicker {
 		}
 		temp = filter(temp, level, genre);
 		int i = 0;
-		while(i<= nbOfSongsNeeded){
+		while(i< nbOfSongsNeeded){
 			int size = temp.size();
 			Random r = new Random();
 			int random = r.nextInt(size);
@@ -41,7 +41,8 @@ public class SongPicker {
 
 	
 	private ArrayList<String> filter(ArrayList<String> temp, Level level, Genre genre) {
-		//TODO werkelijk filteren
+		//TODO werkelijk filteren. tmp is liedjeslijst en als je genre wilt selecteren: een lijst terug
+		// geven die alleen liedjes van dat genre bevat
 		return temp;
 	}
 	

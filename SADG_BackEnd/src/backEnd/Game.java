@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
  
-
-
 public class Game {
 	
-	
+	final static int maxSuccessCount = 1;
 	
 	GameState currentState;
 	GameMode gameMode;
@@ -17,8 +15,7 @@ public class Game {
 	ISender sender;
 	
 	int successCount; 
-	int maxSuccessCount;
-	
+
 	public Game (){
 		gameMode = new RegularMode();
 		songAssigner = new SongAssigner();
@@ -28,38 +25,17 @@ public class Game {
 		try {
 			sender = new Sender(ipAddress);
 		} catch (IOException | TimeoutException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	
-	
-	
-	 
-
-	
-	
-	
 	public void quitGame() {
-		// TODO 
 		sender.closeCommunication();
 	}
 
-
-
-
 	public void startGame() {
-		// TODO Auto-generated method stub
-		
 		startNewRound();
-		
 	}
-
-
-
-
-
 	
 	public void addPlayer(String namePerson){
 		Person person = new Person(namePerson);
@@ -70,13 +46,13 @@ public class Game {
 	
 	public void startNewRound(){
 		System.out.println("Start new round with assignment:");
+		successCount = 0;
 		Map<String, String> songAssignments = songAssigner.assignSongs(gameMode, currentState);
 		long timeToStart = System.currentTimeMillis(); //hier nog plus 10 seconden doen ofzo
 		try {
 			sender.sendMusic(songAssignments);
 			sender.startRound(timeToStart);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -93,6 +69,7 @@ public class Game {
 		if(successCount >= maxSuccessCount){
 			String leader = getLeader();
 			sender.announceWinner(leader);
+			sender.stopRound();
 		}
 	}
 		
@@ -116,7 +93,3 @@ public class Game {
 		return currentState.getScores();
 	}
 }
-	
-	
-
- 

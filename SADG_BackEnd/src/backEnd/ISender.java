@@ -26,7 +26,6 @@ public interface ISender {
 	//Winner van de ronde announcen
 	public abstract void announceWinner(String person) throws IOException;
 	
-	//TODO announce mol match! implementeer aub
 	public abstract void reportMolVerification(String mol, String victim) throws IOException;
 	
 	public abstract void reportVerification(String id1, String id2, boolean stateOfSuccess) throws IOException;
