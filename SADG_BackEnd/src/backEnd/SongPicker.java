@@ -22,14 +22,14 @@ public class SongPicker {
 		ArrayList<String> result = new ArrayList<String>();
 		ArrayList<String> temp = new ArrayList<String>();
 		temp.addAll(availableSongs);
-		if(temp.size() < nbOfSongsNeeded){ //TODO zorgen dat er gewoon genoeg liedjes zijn
+		if(temp.size() < nbOfSongsNeeded){ //TODO hier nog wat code, gewoon zorgen dat er gewoon genoeg liedjes zijn
+			System.out.println("dear me er zijn te weinig songs. ERRROOORRORORORRRR");
 			Math.ceil(temp.size()/nbOfSongsNeeded);
 		}
 		temp = filter(temp, level, genre);
 		int i = 0;
 		while(i<= nbOfSongsNeeded){
 			int size = temp.size();
-			System.out.println(size);
 			Random r = new Random();
 			int random = r.nextInt(size);
 			result.add(temp.get(random));
