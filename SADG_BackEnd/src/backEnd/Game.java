@@ -3,7 +3,6 @@ package backEnd;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
-import java.util.Scanner;
  
 
 
@@ -86,7 +85,7 @@ public class Game {
 		System.out.println("Start groovin'!");
 	}
 	
-	public void verifyMatch(String pers1, String pers2){
+	public void verifyMatch(String pers1, String pers2) throws IOException{
 		boolean success = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
 		if(success){ successCount++ ;}
 		sender.reportVerification(pers1, pers2, success);
