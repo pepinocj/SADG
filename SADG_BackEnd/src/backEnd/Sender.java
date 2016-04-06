@@ -61,11 +61,11 @@ public class Sender implements ISender {
 	}
 
 	@Override
-	public void announceWinner(Person p1, Person p2) throws IOException {
+	public void announceWinner(String person) throws IOException {
 		String congrats = "Congratulations! You won this round!";
-		String nope = "Better luck in the next round!";
+		String nope = "The round is finished, but you are not first. Better luck next time!";
 		for(String id: userIds){
-			if(p1.getUserName() == id || p2.getUserName() == id){
+			if(person == id ){
 				String designatedChannel = id + "results";
 				channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, congrats.getBytes());
 			}
@@ -88,6 +88,26 @@ public class Sender implements ISender {
 			e.printStackTrace();
 		}
 
+	}
+
+	@Override
+	public void reportVerification(String id1, String id2,
+			boolean stateOfSuccess) throws IOException {
+		if(stateOfSuccess){
+			String congrats = "Congrats, you found your partner!";
+			String designatedChannel1 = id1 + "verifyResults";
+			String designatedChannel2 = id2 + "verifyResults";
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel1, null, congrats.getBytes());
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel2, null, congrats.getBytes());
+			
+		}
+		else{
+			String oeps = "This is not the right partner!";
+			String designatedChannel1 = id1 + "verifyResults";
+			String designatedChannel2 = id2 + "verifyResults";
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel1, null, oeps.getBytes());
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel2, null, oeps.getBytes());
+		}
 	}
 
 }
