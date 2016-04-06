@@ -15,18 +15,10 @@
             android:text="Play now"
             android:layout_margin="20dp"
             android:layout_gravity="center_horizontal"
-            android:layout_width="80dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
-        <Button
-            android:id="@+id/button2"
-            android:layout_width="58dp"
-            android:layout_height="80dp"
-            android:layout_margin="10dp"
-            android:gravity="center"
-            android:onClick="scanQR"
-            android:text="QR Code"
-            android:textSize="18dp" />
+
 
         <Button
             android:layout_width="wrap_content"
@@ -34,6 +26,8 @@
             android:text="Play delay"
             android:id="@+id/buttonPlayDelay"
             android:layout_gravity="center_horizontal" />
+
+
 
         <Button
             android:layout_width="wrap_content"
@@ -44,7 +38,38 @@
     </LinearLayout>
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/imageViewQR" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" >
+
+
+        <Button
+            android:id="@+id/button3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:onClick="getNameOfPlayer"
+            android:text="Reset name"
+            android:textSize="18dp" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:onClick="scanQR"
+            android:text="QR Code"
+            android:textSize="18dp" />
+
+
+
+    </LinearLayout>
+
 </LinearLayout>

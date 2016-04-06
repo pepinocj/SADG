@@ -17,18 +17,43 @@ public class Sender implements  ISender{
     private Connection connection;
 
     private String idUser;
+    private ConnectionFactory connectionFactory;
+    private Thread thread;
 
-    public Sender(String ipAdress, String user) throws IOException, TimeoutException {
-        ConnectionFactory factory = new ConnectionFactory();
-        // Voor testen ipaddress = "localhost"
-        factory.setHost(ipAdress);
-        // Initialisatie van connection
-        connection = factory.newConnection();
+    public Sender(ConnectionFactory connectionFactory, String user) {
+       this.connectionFactory = connectionFactory;
+        idUser = user;
+        this.thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while(true){
+                    try{
+                        setUpConnection();
+                    }catch (IOException | TimeoutException e){
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    public void resetUserID(String s){
+        this.idUser = s;
+    }
+
+    public void setUpConnection()throws IOException, TimeoutException{
+
+        connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
         channel.exchangeDeclare(EXCHANGE_NAME, "direct");
-        idUser = user;
+
     }
+
+    public void run(){
+        this.thread.start();
+    }
+
     @Override
     public void sendVerify(String id1, String id2) throws IOException {
         String message = id1+","+id2;
@@ -37,12 +62,10 @@ public class Sender implements  ISender{
 
     @Override
     public void beginAsPlayer(String id) throws IOException {
-        if (idUser == id) {
-            channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, id.getBytes());
-        }
-        else{
+        if (!idUser.equals(id)) {
             idUser = id;
         }
+        channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, id.getBytes());
     }
 
     @Override
