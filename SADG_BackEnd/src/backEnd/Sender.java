@@ -46,7 +46,7 @@ public class Sender implements ISender {
 	public void startRound(long time) throws IOException {
 		String timeToString = String.valueOf(time);
 		for(String id: userIds){
-			String designatedChannel = id + "time";
+			String designatedChannel = id + "start";
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, timeToString.getBytes());
 		}
 	}
