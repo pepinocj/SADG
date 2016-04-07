@@ -32,13 +32,11 @@ public class Receiver implements IReceiver {
 				try {
 					setupConnection();
 				} catch (IOException | TimeoutException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 					try {
 						receive();
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 			}
@@ -87,7 +85,6 @@ public class Receiver implements IReceiver {
 			channel.close();
 			connection.close();
 		} catch (IOException | TimeoutException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
