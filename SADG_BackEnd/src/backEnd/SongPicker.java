@@ -28,7 +28,7 @@ public class SongPicker {
 		}
 		temp = filter(temp, level, genre);
 		int i = 0;
-		while(i<= nbOfSongsNeeded){
+		while(i< nbOfSongsNeeded){
 			int size = temp.size();
 			Random r = new Random();
 			int random = r.nextInt(size);

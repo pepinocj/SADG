@@ -71,7 +71,7 @@ public class Game {
 	public void startNewRound(){
 		System.out.println("Start new round with assignment:");
 		Map<String, String> songAssignments = songAssigner.assignSongs(gameMode, currentState);
-		long timeToStart = System.currentTimeMillis(); //hier nog plus 10 seconden doen ofzo
+		long timeToStart = System.currentTimeMillis()+ 10000; //hier nog plus 10 seconden doen ofzo
 		try {
 			sender.sendMusic(songAssignments);
 			sender.startRound(timeToStart);

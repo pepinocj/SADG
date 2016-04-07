@@ -26,13 +26,14 @@ public class Sender implements  ISender{
         this.thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                while(true){
+
                     try{
                         setUpConnection();
+
                     }catch (IOException | TimeoutException e){
                         e.printStackTrace();
                     }
-                }
+
             }
         });
     }

@@ -1,10 +1,13 @@
 package be.kejcs.sadg.Classes;
 
 import android.app.Activity;
+import android.location.Location;
 import android.os.Handler;
 import android.os.Message;
+import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Date;
 
 import be.kejcs.sadg.MainActivity;
 import be.kejcs.sadg.R;
@@ -15,7 +18,7 @@ import be.kejcs.sadg.R;
 public class DanceGame extends Handler {
 
     private JukeBox jukeBox;
-
+    private MainActivity act;
 
     public DanceGame(MainActivity activity){
         this.jukeBox = new JukeBox(activity);
@@ -24,6 +27,7 @@ public class DanceGame extends Handler {
         this.jukeBox.addMusic(new Music(R.raw.freestyler,2));
         this.jukeBox.addMusic(new Music(R.raw.sorry,3));
         this.jukeBox.addMusic(new Music(R.raw.work,4));
+        this.act= activity;
 
     }
 
@@ -33,6 +37,15 @@ public class DanceGame extends Handler {
 
         this.playSong(msg.arg1);
         //do something here
+
+        act.runOnUiThread(new Runnable() {
+            public void run() {
+                Calendar c = Calendar.getInstance();
+                Date d = c.getTime();
+
+                Toast.makeText(act, d.toString(), Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     public void playSong(int id){

@@ -92,10 +92,12 @@ public class MainActivity extends AppCompatActivity {
                         if(player.name.equals("")){
                             player.name = "DEFAULTNAME";
                         }
-                        Log.d("givenName",player.name);
+                        Log.d("givenName", player.name);
                         ((ImageView) findViewById(R.id.imageViewQR)).setImageBitmap(QRModule.getQRBitmap(player.name));
                         communicationCenter.resetPlayer(player);
+
                         communicationCenter.startConnectionThreads();
+
                     }
                 });
 
@@ -109,6 +111,9 @@ public class MainActivity extends AppCompatActivity {
         alertDialog.show();
     }
 
+    public void register(View v){
+        communicationCenter.register(player.name);
+    }
 
     private void setOnButtonClickListeners() {
 
@@ -201,5 +206,6 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
 
         }
+        communicationCenter.verifyPlayers(player.name, scanResult.getContents());
     }
 }

@@ -31,7 +31,7 @@ public class CommunicationCenter {
     public void startRound(){
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(roundParameters.start);
-        danceGame.playSongAt(roundParameters.song,c);
+        danceGame.playSongAt(roundParameters.song, c);
     }
 
 
@@ -46,6 +46,8 @@ public class CommunicationCenter {
         ConnectionFactory factory = new ConnectionFactory();
         // Voor testen ipaddress = "localhost"
         factory.setHost(player.ip);
+        factory.setUsername("player");
+        factory.setPassword("player");
         // Initialisatie van connection
         this.sender = new Sender(factory,player.name);
         this.receiver = new Receiver(factory,player.name,this);
@@ -64,9 +66,31 @@ public class CommunicationCenter {
 
 
             this.receiver.run();
-            //this.sender.run();
+            this.sender.run();
 
 
 
+    }
+
+    public void closeCommunication(){
+        this.receiver.closeCommunication();
+        this.sender.closeCommunication();
+    }
+
+    public void verifyPlayers(String s1, String s2){
+        try{
+            sender.sendVerify(s1,s2);
+        } catch(IOException e){
+            e.printStackTrace();
+        }
+
+    }
+
+    public void register(String name){
+        try{
+        sender.beginAsPlayer(name);
+    } catch(IOException e){
+        e.printStackTrace();
+    }
     }
 }
