@@ -71,6 +71,10 @@ public class Receiver implements IReceiver {
 					System.out.println("Received: " + envelope.getRoutingKey() + ": " + message + ".");
 					game.addPlayer(message);
 				}
+				if(envelope.getRoutingKey().equals("removePlayer")){
+					System.out.println("Received: " + envelope.getRoutingKey() + ": " + message + ".");
+					game.removePlayer(message);
+				}
 				else{
 					System.out.println("error!!!");
 				}

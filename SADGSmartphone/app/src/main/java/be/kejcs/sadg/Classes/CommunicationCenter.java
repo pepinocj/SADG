@@ -1,12 +1,9 @@
 package be.kejcs.sadg.Classes;
 
-import android.widget.RemoteViews;
-
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
 import java.util.Calendar;
-import java.util.concurrent.TimeoutException;
 
 /**
  * Created by Josi on 5/04/2016.
@@ -54,6 +51,10 @@ public class CommunicationCenter {
 
 
 
+    }
+
+    public void changeUsername(String message){
+        //TODO implement;
     }
 
     public void resetPlayer(Player p){

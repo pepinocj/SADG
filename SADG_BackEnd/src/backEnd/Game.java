@@ -43,6 +43,12 @@ public class Game {
 		System.out.println("Person " + person.getUserName() + " was added.");
 	}
 	
+	public void removePlayer(String namePerson){
+		currentState.removePlayer(namePerson);
+		//Lelijke fix maar nodig voor consistentie tenzij bij senden altijd playerlist wordt doorgestuurd.
+		sender.removeUser(namePerson);
+		System.out.println("Person " + namePerson + " was removed.");
+	}
 	
 	public void startNewRound(){
 		System.out.println("Start new round with assignment:");

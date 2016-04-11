@@ -2,10 +2,15 @@ package be.kejcs.sadg.Classes;
 
 import android.util.Log;
 
-import com.rabbitmq.client.*;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.Channel;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Consumer;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Envelope;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeoutException;
@@ -21,6 +26,7 @@ public class Receiver implements IReceiver {
     private static String MUSIC = "music";
     private static String RESULTS = "results";
     private static String VERIFYRESULTS = "verifyResults";
+    private static String USERNAME ="username";
 
     private Channel channel;
     private Connection connection;
@@ -97,6 +103,9 @@ public class Receiver implements IReceiver {
 
                 }else if(key.equals(MUSIC)){
                     communicationCenter.setSong(message);
+                }
+                else if(key.equals(USERNAME)){
+                    communicationCenter.changeUsername(message);
                 }
 
 

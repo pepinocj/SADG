@@ -30,7 +30,11 @@ public interface ISender {
 	
 	public abstract void reportVerification(String id1, String id2, boolean stateOfSuccess) throws IOException;
 	
+	public abstract void chooseNewName(String id) throws IOException;
+	
 	//Eenmaal spelen gedaan is: sluiten van communicatie
 	public abstract void closeCommunication();
 	
+	//Lelijke fix voor consistentie
+	public abstract void removeUser(String name);
 }

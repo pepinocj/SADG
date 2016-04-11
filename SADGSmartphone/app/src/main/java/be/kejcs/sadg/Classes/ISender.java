@@ -11,6 +11,8 @@ public interface ISender {
 
     public abstract void beginAsPlayer(String id) throws IOException;
 
+    public abstract void removeAsPlayer(String id) throws IOException;
+
     public abstract void closeCommunication();
 
 }

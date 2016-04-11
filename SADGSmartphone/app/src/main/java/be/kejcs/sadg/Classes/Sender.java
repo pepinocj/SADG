@@ -69,6 +69,12 @@ public class Sender implements  ISender{
         channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, id.getBytes());
     }
 
+    //TODO integreren in communication center
+    @Override
+    public void removeAsPlayer(String id) throws IOException {
+        channel.basicPublish(EXCHANGE_NAME,"removePlayer", null, id.getBytes());
+    }
+
     @Override
     public void closeCommunication() {
         try {

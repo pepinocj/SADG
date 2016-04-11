@@ -41,6 +41,14 @@ public class GameState {
 		players.add(person); //TODO fix this
 	}
 	
+	public void removePlayer(String name){
+		for(int i=0; i<players.size(); i++){
+			if(players.get(i).getUserName().equals(name)){
+				players.remove(i);
+			}
+		}
+	}
+	
 	public ArrayList<Person> getPlayers(){
 		return players;
 	}
