@@ -15,12 +15,8 @@ public class Sender implements ISender {
 
 	private Channel channel;
 	private Connection connection;
-	//TODO slecht want om userIds correct geupdate te houden, moet
-	// Game tegen ons zeggen wanneer via Sender een user zegt van: remove mij
-	// Alternatief elke keer lijst van persons doorgeven wat ook maar meh is
 	private List<String> userIds;
-
-
+	
 	public Sender(String ipaddress) throws IOException, TimeoutException{
 		ConnectionFactory factory = new ConnectionFactory();
 		// Voor testen ipaddress = "localhost"
@@ -33,6 +29,14 @@ public class Sender implements ISender {
 		userIds = new ArrayList<String>();
 	}
 
+	public void removeUser(String name){
+		for(int i=0; i<userIds.size(); i++){
+			if(userIds.get(i).equals(name)){
+				userIds.remove(i);
+			}
+		}
+	}
+	
 	@Override
 	public void sendMusic(Map<String, String> music) throws IOException { //username en songname 
 		for(Map.Entry<String, String> entry: music.entrySet()){
@@ -116,6 +120,13 @@ public class Sender implements ISender {
 			String oeps = "You were fooled!";
 			String designatedChannel2 = victim + ".verifyResults";
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel2, null, oeps.getBytes());
+	}
+
+	@Override
+	public void chooseNewName(String id) throws IOException {
+		String message = "Please chose another username.";
+		String designatedKey = id + ".username";
+		channel.basicPublish(EXCHANGE_NAME, designatedKey, null, message.getBytes());
 	}
 
 }

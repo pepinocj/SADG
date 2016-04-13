@@ -10,10 +10,6 @@ public class ScoreHandler {
 		return regularMatch(pers1, pers2, currentState); 
 	}
 	
-
-	
-	
-	
 	private boolean regularMatch(String pers1, String pers2, GameState currentState) {
 		boolean isMatch = checkMatch(pers1, pers2, currentState);
 		int secondsPassed = (int) ((System.currentTimeMillis() - currentState.timeStarted) * 60);
@@ -30,11 +26,6 @@ public class ScoreHandler {
 		
 		return isMatch;
 	}
-	
-	
-	
-	
-	
 
 	public MatchType handleScore(MolMode gameMode, String pers1, String pers2, GameState currentState) {
 		int secondsPassed = (int) ((System.currentTimeMillis() - currentState.timeStarted) * 60);
@@ -56,9 +47,7 @@ public class ScoreHandler {
 		
 		boolean success = regularMatch(pers1, pers2, currentState);
 		if(success){return MatchType.SUCCESS;}
-		else{return MatchType.FAIL;}
-			
-		
+		else{return MatchType.FAIL;}	
 	}
 	
 	
@@ -66,9 +55,6 @@ public class ScoreHandler {
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
-	
 	
 	private boolean checkMatch(String pers1, String pers2, GameState currentState){
 		return (currentState.songAssignments.get(pers1) == (currentState.songAssignments.get(pers2)));

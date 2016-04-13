@@ -42,7 +42,8 @@ public class SongPicker {
 
 	
 	private ArrayList<String> filter(ArrayList<String> temp, Level level, Genre genre) {
-		//TODO werkelijk filteren
+		//TODO werkelijk filteren. tmp is liedjeslijst en als je genre wilt selecteren: een lijst terug
+		// geven die alleen liedjes van dat genre bevat
 		return temp;
 	}
 	
