@@ -19,6 +19,7 @@ public class SongPicker {
 
 	//Aanname dat er meer liedjes zijn dan er nodig zijn
 	public ArrayList<String> pickSongs(int nbOfSongsNeeded, Level level, Genre genre) {
+		//TODO opvangen dat er een oneven aantal drie mensen zijn
 		ArrayList<String> result = new ArrayList<String>();
 		ArrayList<String> temp = new ArrayList<String>();
 		temp.addAll(availableSongs);
@@ -28,7 +29,7 @@ public class SongPicker {
 		}
 		temp = filter(temp, level, genre);
 		int i = 0;
-		while(i<= nbOfSongsNeeded){
+		while(i< nbOfSongsNeeded){
 			int size = temp.size();
 			Random r = new Random();
 			int random = r.nextInt(size);

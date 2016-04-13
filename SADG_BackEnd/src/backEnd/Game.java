@@ -54,6 +54,7 @@ public class Game {
 		
 		startNewRound();
 		
+		
 	}
 
 
@@ -93,6 +94,7 @@ public class Game {
 		if(successCount >= maxSuccessCount){
 			String leader = getLeader();
 			sender.announceWinner(leader);
+			
 		}
 	}
 		
