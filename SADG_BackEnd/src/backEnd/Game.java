@@ -7,6 +7,7 @@ import java.util.concurrent.TimeoutException;
 public class Game {
 	
 	final static int maxSuccessCount = 1;
+	final static int maxRoundCount = 1;
 	
 	GameState currentState;
 	GameMode gameMode;
@@ -15,12 +16,15 @@ public class Game {
 	ISender sender;
 	
 	int successCount; 
+	int roundCount; 
+	
 
 	public Game (){
 		gameMode = new RegularMode();
 		songAssigner = new SongAssigner();
 		scoreHandler = new ScoreHandler();
 		currentState = new GameState();
+		roundCount = 0;
 		String ipAddress = "localhost";
 		try {
 			sender = new Sender(ipAddress);
@@ -77,6 +81,14 @@ public class Game {
 			String leader = getLeader();
 			sender.announceWinner(leader);
 			sender.stopRound();
+			roundCount++;
+			if(roundCount <= maxRoundCount){
+				this.startNewRound();
+			}
+			//TODO end of game mooier afhandelen
+			else{
+				System.out.println("Game Over! Congratulations, "+ getLeader());}
+				roundCount = 0;
 		}
 	}
 		

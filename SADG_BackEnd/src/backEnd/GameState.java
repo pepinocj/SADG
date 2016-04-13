@@ -13,7 +13,7 @@ public class GameState {
 
 	
 	public enum Genre {
-	    ALL, POP, HIPOP, DUBSTEP};
+	    ALL, POP, HIPHOP, DUBSTEP}; //ook in main aanpassen voor user input
 
 	public enum Level {
 		ALL, EASY, MEDIUM, HARD};
@@ -23,8 +23,8 @@ public class GameState {
 	ArrayList<Person> players;
 	Map<String, String> songAssignments;
 	long timeStarted;
-	Genre genre;
-	Level level;
+	public Genre genre;
+	public Level level;
 	//add other configuration like level or genre
 	
 	

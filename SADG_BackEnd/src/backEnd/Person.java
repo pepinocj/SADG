@@ -22,4 +22,17 @@ public class Person {
 		return userName;
 	}
 
+	public boolean equals(Object obj){
+		if(obj instanceof Person)
+		{
+		   Person otherPerson = (Person) obj;
+		   if(this.userName.equals(otherPerson.userName)){return true;}
+		   else {return false;}
+		}
+		else
+		{
+			return false;
+		}
+
+	}
 }

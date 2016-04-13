@@ -42,8 +42,11 @@ public class SongPicker {
 
 	
 	private ArrayList<String> filter(ArrayList<String> temp, Level level, Genre genre) {
-		//TODO werkelijk filteren. tmp is liedjeslijst en als je genre wilt selecteren: een lijst terug
-		// geven die alleen liedjes van dat genre bevat
+		//itereer hier over alle liedjes en filter die met genre en level uit
+		//lukt pas wanneer we een idee hebben hoe concept liedje er uit ziet
+		if (level.equals(Level.EASY)){
+			return new ArrayList<String>(Arrays.asList("1"));
+			}
 		return temp;
 	}
 	
