@@ -5,6 +5,7 @@ import java.util.Map;
 
 public class RegularMode extends GameMode {
 
+	
 	@Override
 	public Map<String, String> assignSongs(SongPicker songPicker,GameState gameState) {
 		
@@ -19,4 +20,12 @@ public class RegularMode extends GameMode {
 		return playerSongMap;
 	}
 
+	@Override
+	public MatchType handleScore(String pers1, String pers2, GameState currentState) {
+		boolean result = super.regularMatch(pers1, pers2, currentState);
+		if (result){return MatchType.SUCCESS;}
+		else {return MatchType.FAIL;}
+	}
+
+	
 }

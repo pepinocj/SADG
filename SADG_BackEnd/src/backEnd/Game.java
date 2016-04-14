@@ -73,9 +73,31 @@ public class Game {
 	}
 	
 	public void verifyMatch(String pers1, String pers2) throws IOException{
-		boolean success = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
-		if(success){ successCount++ ;}
-		sender.reportVerification(pers1, pers2, success);
+		MatchType successType = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
+		boolean success = false;
+		if(successType == MatchType.SUCCESS){
+			successCount++ ;
+			success = true; }
+		
+		if (successType == MatchType.MOLMATCH){
+			successCount++ ;
+			String mol;
+			String victim;
+			if(currentState.getSongAssignments().get(pers1).equals("MolSong")){
+				mol = pers1;
+				victim = pers2;
+			}
+			else{
+				mol = pers2;
+				victim =pers1;}
+			sender.reportMolVerification(mol, victim);
+		}
+		
+		else{
+			sender.reportVerification(pers1, pers2, success);
+			}
+		System.out.println("Verification: " +successType);
+
 		
 		if(successCount >= maxSuccessCount){
 			String leader = getLeader();

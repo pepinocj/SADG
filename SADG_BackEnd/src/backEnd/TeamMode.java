@@ -9,5 +9,12 @@ public class TeamMode extends GameMode {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	
+	@Override
+	public MatchType handleScore( String pers1, String pers2, GameState currentState) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }
