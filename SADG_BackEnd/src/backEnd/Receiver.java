@@ -67,11 +67,11 @@ public class Receiver implements IReceiver {
 					System.out.println("Received: " + envelope.getRoutingKey() + "with names " + parts[0] + " and " + parts[1] + ".");
 					game.verifyMatch(parts[0], parts[1]);
 				}
-				if(envelope.getRoutingKey().equals("addPlayer")){
+				else if(envelope.getRoutingKey().equals("addPlayer")){
 					System.out.println("Received: " + envelope.getRoutingKey() + ": " + message + ".");
 					game.addPlayer(message);
 				}
-				if(envelope.getRoutingKey().equals("removePlayer")){
+				else if(envelope.getRoutingKey().equals("removePlayer")){
 					System.out.println("Received: " + envelope.getRoutingKey() + ": " + message + ".");
 					game.removePlayer(message);
 				}
