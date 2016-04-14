@@ -68,6 +68,16 @@
             android:text="QR Code"
             android:textSize="18dp" />
 
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:gravity="center"
+            android:onClick="register"
+            android:text="Register"
+            android:textSize="18dp" />
+
 
 
     </LinearLayout>
