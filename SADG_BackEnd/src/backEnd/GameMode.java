@@ -19,5 +19,28 @@ public abstract class GameMode {
 	}
 	
 	
+	public boolean regularMatch(String pers1, String pers2, GameState currentState) {
+		boolean isMatch = checkMatch(pers1, pers2, currentState);
+		int secondsPassed = (int) ((System.currentTimeMillis() - currentState.timeStarted) * 60);
+		if(isMatch){
+			System.out.println("Congratulations! It's a match");
+			currentState.addToScore(pers1, secondsPassed);
+			currentState.addToScore(pers2, secondsPassed);
+			}
+		else{
+			System.out.println("Too bad, not a match!");
+			currentState.addToScore(pers1, -secondsPassed);
+			currentState.addToScore(pers2, -secondsPassed);
+			}
+		
+		return isMatch;
+	}
+	
+	
+	private boolean checkMatch(String pers1, String pers2, GameState currentState){
+		return (currentState.songAssignments.get(pers1) == (currentState.songAssignments.get(pers2)));
+	}
+	
 	public abstract Map<String, String> assignSongs(SongPicker songPicker, GameState gameState); 
+	public abstract MatchType handleScore(String pers1, String pers2, GameState currentState);
 }
