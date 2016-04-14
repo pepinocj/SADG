@@ -78,4 +78,9 @@ public class Sender implements  ISender{
             e.printStackTrace();
         }
     }
+
+        @Override
+        public void removeAsPlayer(String id) throws IOException {
+                channel.basicPublish(EXCHANGE_NAME,"removePlayer", null, id.getBytes());
+            }
 }

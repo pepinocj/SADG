@@ -28,6 +28,8 @@ public class CommunicationCenter {
 
     }
 
+
+
     public void startRound(){
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(roundParameters.start);
@@ -52,6 +54,10 @@ public class CommunicationCenter {
 
 
 
+    }
+
+    public void changeUsername(String message){
+                //TODO implement;
     }
 
     public void resetPlayer(Player p){

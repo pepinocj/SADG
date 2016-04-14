@@ -21,6 +21,7 @@ public class Receiver implements IReceiver {
     private static String MUSIC = "music";
     private static String RESULTS = "results";
     private static String VERIFYRESULTS = "verifyResults";
+    private static String USERNAME ="username";
 
     private Channel channel;
     private Connection connection;
@@ -95,6 +96,8 @@ public class Receiver implements IReceiver {
 
                 }else if(key.equals(RESULTS)){
 
+                }else if(key.equals(USERNAME)){
+                                        communicationCenter.changeUsername(message);
                 }else if(key.equals(MUSIC)){
                     communicationCenter.setSong(message);
                 }
