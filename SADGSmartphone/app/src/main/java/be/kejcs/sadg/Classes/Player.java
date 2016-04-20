@@ -4,7 +4,7 @@ package be.kejcs.sadg.Classes;
  * Created by Josi on 4/04/2016.
  */
 public class Player {
-    public static final String IP_ADRESS = "10.0.3.2";
+    public static final String IP_ADRESS = "192.168.43.184";
     public int id;
     public String name;
     public String ip;

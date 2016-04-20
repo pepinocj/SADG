@@ -31,23 +31,31 @@ public class Receiver implements IReceiver {
     private ConnectionFactory connectionFactory;
     private Thread thread;
 
+    private void resetThread(){
+        Thread t  = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  while(true){
+                try{
+                    setUpConnection();
+                }catch (IOException | TimeoutException e){
+                    e.printStackTrace();
+                }
+                // }
+            }
+        });
+
+
+        this.thread = t;
+
+    }
+
     public Receiver(ConnectionFactory connectionFactory, String userId,CommunicationCenter communicationCenter) {
 
         this.connectionFactory =connectionFactory;
         this.userId = userId;
         this.communicationCenter = communicationCenter;
-        this.thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                    try{
-                        setUpConnection();
-                    }catch (IOException | TimeoutException e){
-                        e.printStackTrace();
-                    }
-                }
-
-        });
+        //resetThread();
 
     }
     
@@ -56,7 +64,10 @@ public class Receiver implements IReceiver {
     }
 
     public void run(){
-        this.thread.start();
+            resetThread();
+            this.thread.start();
+
+
     }
 
 
@@ -64,7 +75,10 @@ public class Receiver implements IReceiver {
 
     public void setUpConnection()throws IOException, TimeoutException{
 
+        if(connection != null){
+            connection.close();
 
+        }
         connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
@@ -93,9 +107,9 @@ public class Receiver implements IReceiver {
                     communicationCenter.setStart(message);
                     communicationCenter.startRound();
                 }else if(key.equals(VERIFYRESULTS)){
-
+                    communicationCenter.handleVerifyResults(message);
                 }else if(key.equals(RESULTS)){
-
+                    communicationCenter.handleResults(message);
                 }else if(key.equals(USERNAME)){
                                         communicationCenter.changeUsername(message);
                 }else if(key.equals(MUSIC)){
