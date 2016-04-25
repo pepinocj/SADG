@@ -1,6 +1,7 @@
 package backEnd;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 
 
@@ -65,7 +66,7 @@ public class GameState {
 	}
 	
 	public Map<String, Integer> getScores(){
-		Map<String, Integer> scores = Collections.emptyMap();
+		Map<String, Integer> scores = new HashMap<>();
 		System.out.println("The scores are:");
 		
 		for( Person person :players){
