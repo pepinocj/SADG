@@ -23,6 +23,11 @@ public class CommunicationCenter {
     private Receiver receiver;
     private MainActivity mainActivity;
 
+
+    public boolean hasScannedInThisRound;
+    public long lastScanTime;
+
+
     public void setSong(String song){
         roundParameters.setSong(song);
     }
@@ -35,9 +40,15 @@ public class CommunicationCenter {
 
 
     public void startRound(){
+
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(roundParameters.start);
-        danceGame.playSongAt(roundParameters.song, c);
+
+
+
+        danceGame.playSongAt(roundParameters.song, c,hasScannedInThisRound,lastScanTime);
+
+        hasScannedInThisRound = false;
     }
 
 
@@ -60,7 +71,14 @@ public class CommunicationCenter {
         this.receiver = new Receiver(factory,player.name,this);
 
 
+        this.hasScannedInThisRound = false;
+        this.lastScanTime = 0;
 
+
+    }
+
+    public void setSystemTime(String message){
+        danceGame.setSystemTime(message);
     }
 
     public void changeUsername(String message){
@@ -105,26 +123,30 @@ public class CommunicationCenter {
     }
 
     public void handleVerifyResults(final String message){
-        mainActivity.runOnUiThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(mainActivity, message, Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
+//        mainActivity.runOnUiThread(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mainActivity.tvResults.setText("Last result message: " + message);
+//                    }
+//                }
+//        );
+
+
 
     }
 
     public void handleResults(final String message){
-        mainActivity.runOnUiThread(
-                new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(mainActivity, message, Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
+//        mainActivity.runOnUiThread(
+//                new Runnable() {
+//                    @Override
+//                    public void run() {
+//                        mainActivity.tvVerify.setText("Last verification message: " + message);
+//                    }
+//                }
+//        );
+
+
 
     }
 }
