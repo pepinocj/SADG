@@ -123,28 +123,28 @@ public class CommunicationCenter {
     }
 
     public void handleVerifyResults(final String message){
-//        mainActivity.runOnUiThread(
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mainActivity.tvResults.setText("Last result message: " + message);
-//                    }
-//                }
-//        );
+        mainActivity.runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        mainActivity.tvResults.setText("Last result message: " + message);
+                    }
+                }
+        );
 
 
 
     }
 
     public void handleResults(final String message){
-//        mainActivity.runOnUiThread(
-//                new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        mainActivity.tvVerify.setText("Last verification message: " + message);
-//                    }
-//                }
-//        );
+        mainActivity.runOnUiThread(
+                new Runnable() {
+                    @Override
+                    public void run() {
+                        mainActivity.tvVerify.setText("Last verification message: " + message);
+                    }
+                }
+        );
 
 
 
