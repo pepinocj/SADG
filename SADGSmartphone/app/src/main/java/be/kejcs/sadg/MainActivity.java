@@ -222,7 +222,7 @@ public class MainActivity extends AppCompatActivity {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
             //Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
-            tvExtraInfo.setText("QR-code: "+scanResult.getContents());
+            tvExtraInfo.setText(scanResult.getContents());
             communicationCenter.lastScanTime =System.currentTimeMillis();
             communicationCenter.verify(player.name, scanResult.getContents());
 
@@ -230,5 +230,13 @@ public class MainActivity extends AppCompatActivity {
             communicationCenter.hasScannedInThisRound = true;
         }
 
+    }
+
+    public void showResultText(String message){
+        tvResults.setText( message);
+    }
+
+    public void showVerifyResultText(String message){
+        tvVerify.setText( message);
     }
 }
