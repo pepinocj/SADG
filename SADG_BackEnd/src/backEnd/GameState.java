@@ -83,5 +83,5 @@ public class GameState {
 		}
 	}
 	
-	public Map<>
+	//public Map<>
 }
