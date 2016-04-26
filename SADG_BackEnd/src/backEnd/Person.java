@@ -1,6 +1,6 @@
 package backEnd;
 
-public class Person {
+public class Person implements Comparable<Person>{
 	
 	private String userName;
 	private int score = 0;
@@ -34,5 +34,12 @@ public class Person {
 			return false;
 		}
 
+	}
+
+	@Override
+	public int compareTo(Person comparePerson) {
+		int compareScore = comparePerson.getScore();
+		//descending order
+		return this.getScore() - compareScore;
 	}
 }
