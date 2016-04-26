@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity {
     private CommunicationCenter communicationCenter;
 
 
+    public TextView tvResults;
+    public TextView tvVerify;
+    public TextView tvExtraInfo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,12 +60,16 @@ public class MainActivity extends AppCompatActivity {
         buttonPlayDelay = (Button) findViewById(R.id.buttonPlayDelay);
         buttonStop = (Button) findViewById(R.id.buttonStop);
 
+        tvResults = (TextView) findViewById(R.id.textViewResults);
+        tvVerify = (TextView) findViewById(R.id.textViewVerify);
+        tvExtraInfo = (TextView) findViewById(R.id.textViewExtraInfo);
+
         setOnButtonClickListeners();
 
 
         this.danceGame = new DanceGame(this);
-        this.player = new Player("",Player.IP_ADRESS);
-        this.communicationCenter = new CommunicationCenter(danceGame,player);
+        this.player = new Player("DEFAULTPLAYER",Player.IP_ADRESS);
+        this.communicationCenter = new CommunicationCenter(danceGame,player,this);
 
 
 
@@ -74,14 +81,18 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        getNameOfPlayer(null);
 
+
+    }
+
+    public void connect(View v){
+        communicationCenter.startConnectionThreads(); // create new threads and connection
     }
 
     public void getNameOfPlayer(View v){
         AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
         alertDialogBuilder.setTitle("What is your name?");
-        alertDialogBuilder.setMessage("Welcome to dear user.");
+        alertDialogBuilder.setMessage("Name must be unique");
         final EditText input = new EditText(this);
         alertDialogBuilder.setView(input);
 
@@ -92,10 +103,14 @@ public class MainActivity extends AppCompatActivity {
                         if(player.name.equals("")){
                             player.name = "DEFAULTNAME";
                         }
-                        Log.d("givenName",player.name);
+                        Log.d("givenName", player.name);
                         ((ImageView) findViewById(R.id.imageViewQR)).setImageBitmap(QRModule.getQRBitmap(player.name));
+                        ((TextView) findViewById(R.id.textViewName)).setText(player.name);
                         communicationCenter.resetPlayer(player);
                         communicationCenter.startConnectionThreads();
+                        ((Button) findViewById(R.id.button2)).setVisibility(View.VISIBLE);
+
+
                     }
                 });
 
@@ -107,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
 
         AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
+    }
+
+    public void register(View v){
+        communicationCenter.addPlayer(player.name);
+    }
+
+    public void unregister(View v){
+        communicationCenter.removePlayer(player.name);
     }
 
 
@@ -137,7 +160,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Calendar t = Calendar.getInstance();
                 t.setTimeInMillis(t.getTimeInMillis()+30000);
-                danceGame.playSongAt(0, t);
+                danceGame.playSongAt(0, t,false,0);
             }
         });
 
@@ -175,13 +198,13 @@ public class MainActivity extends AppCompatActivity {
         //This function is called when an option in the menu is clicked
         switch (item.getItemId()) {
             case R.id.first:
-                Toast.makeText(this, "You clicked the first one!", Toast.LENGTH_LONG).show();
+                getNameOfPlayer(null);
                 return true;
             case R.id.second:
-                Toast.makeText(this, "You clicked the second one!", Toast.LENGTH_SHORT).show();
+                register(null);
                 return true;
             case R.id.third:
-                Toast.makeText(this, "You clicked the third one!", Toast.LENGTH_LONG).show();
+                unregister(null);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -198,8 +221,14 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
-            Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
+            //Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
+            tvExtraInfo.setText("QR-code: "+scanResult.getContents());
+            communicationCenter.lastScanTime =System.currentTimeMillis();
+            communicationCenter.verify(player.name, scanResult.getContents());
 
+
+            communicationCenter.hasScannedInThisRound = true;
         }
+
     }
 }

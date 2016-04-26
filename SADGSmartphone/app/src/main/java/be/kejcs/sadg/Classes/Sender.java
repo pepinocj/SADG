@@ -20,21 +20,30 @@ public class Sender implements  ISender{
     private ConnectionFactory connectionFactory;
     private Thread thread;
 
+    private void resetThread(){
+        Thread t  = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  while(true){
+                try{
+                    setUpConnection();
+                }catch (IOException | TimeoutException e){
+                    e.printStackTrace();
+                }
+                // }
+            }
+        });
+
+
+           // this.thread.interrupt();
+            this.thread = t;
+
+    }
+
     public Sender(ConnectionFactory connectionFactory, String user) {
        this.connectionFactory = connectionFactory;
         idUser = user;
-        this.thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                while(true){
-                    try{
-                        setUpConnection();
-                    }catch (IOException | TimeoutException e){
-                        e.printStackTrace();
-                    }
-                }
-            }
-        });
+        //resetThread();
     }
 
     public void resetUserID(String s){
@@ -42,16 +51,26 @@ public class Sender implements  ISender{
     }
 
     public void setUpConnection()throws IOException, TimeoutException{
+        if(connection != null){
+            connection.close();
 
+        }
         connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
         channel.exchangeDeclare(EXCHANGE_NAME, "direct");
-
     }
 
     public void run(){
-        this.thread.start();
+
+
+            resetThread();
+            this.thread.start();
+
+
+
+
+
     }
 
     @Override
@@ -65,6 +84,7 @@ public class Sender implements  ISender{
         if (!idUser.equals(id)) {
             idUser = id;
         }
+
         channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, id.getBytes());
     }
 
@@ -78,4 +98,9 @@ public class Sender implements  ISender{
             e.printStackTrace();
         }
     }
+
+        @Override
+        public void removeAsPlayer(String id) throws IOException {
+                channel.basicPublish(EXCHANGE_NAME,"removePlayer", null, id.getBytes());
+            }
 }

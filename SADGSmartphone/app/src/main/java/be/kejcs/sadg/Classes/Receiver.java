@@ -21,6 +21,8 @@ public class Receiver implements IReceiver {
     private static String MUSIC = "music";
     private static String RESULTS = "results";
     private static String VERIFYRESULTS = "verifyResults";
+    private static String USERNAME ="username";
+    private static String SYSTEMTIME ="systemTime";
 
     private Channel channel;
     private Connection connection;
@@ -30,23 +32,31 @@ public class Receiver implements IReceiver {
     private ConnectionFactory connectionFactory;
     private Thread thread;
 
+    private void resetThread(){
+        Thread t  = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                //  while(true){
+                try{
+                    setUpConnection();
+                }catch (IOException | TimeoutException e){
+                    e.printStackTrace();
+                }
+                // }
+            }
+        });
+
+
+        this.thread = t;
+
+    }
+
     public Receiver(ConnectionFactory connectionFactory, String userId,CommunicationCenter communicationCenter) {
 
         this.connectionFactory =connectionFactory;
         this.userId = userId;
         this.communicationCenter = communicationCenter;
-        this.thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-
-                    try{
-                        setUpConnection();
-                    }catch (IOException | TimeoutException e){
-                        e.printStackTrace();
-                    }
-                }
-
-        });
+        //resetThread();
 
     }
     
@@ -55,7 +65,10 @@ public class Receiver implements IReceiver {
     }
 
     public void run(){
-        this.thread.start();
+            resetThread();
+            this.thread.start();
+
+
     }
 
 
@@ -63,7 +76,10 @@ public class Receiver implements IReceiver {
 
     public void setUpConnection()throws IOException, TimeoutException{
 
+        if(connection != null){
+            connection.close();
 
+        }
         connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
@@ -71,34 +87,45 @@ public class Receiver implements IReceiver {
         queueName = channel.queueDeclare().getQueue();
 
 
-        List<String> keys = Arrays.asList(STOP,START,MUSIC,RESULTS,VERIFYRESULTS);
+        List<String> keys = Arrays.asList(STOP,START,MUSIC,RESULTS,VERIFYRESULTS,SYSTEMTIME);
         for(String k:keys){
             channel.queueBind(queueName,EXCHANGE_NAME,userId + "."+k);
         }
+        channel.queueBind(queueName,EXCHANGE_NAME,"broadCastStart"); //TODO BROADCAST
+
         Consumer consumer = new DefaultConsumer(channel){
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope,
                                        AMQP.BasicProperties properties, byte[] body) throws IOException {
                 String message = new String(body, "UTF-8");
                 String key = envelope.getRoutingKey();
-                Log.d("key", key);
-                String [] splitted= key.split("\\.");
-                Log.d("key", splitted.toString());
 
-                key = splitted[1];
-                if(key.equals(STOP)){
-                    communicationCenter.stopRound();
-                }else if(key.equals(START)){
-                    communicationCenter.setStart(message);
-                    communicationCenter.startRound();
-                }else if(key.equals(VERIFYRESULTS)){
+                if(key.equals("broadCastStart")){
+                    communicationCenter.startRound();//TODO BROADCAST
+                }else {
 
-                }else if(key.equals(RESULTS)){
+                    String[] splitted = key.split("\\.");
 
-                }else if(key.equals(MUSIC)){
-                    communicationCenter.setSong(message);
+
+                    key = splitted[1];
+                    if (key.equals(STOP)) {
+                        communicationCenter.stopRound();
+                    } else if (key.equals(START)) {
+                        communicationCenter.setStart(message);
+                        communicationCenter.startRound();
+                    } else if (key.equals(VERIFYRESULTS)) {
+                        communicationCenter.handleVerifyResults(message);
+                    } else if (key.equals(RESULTS)) {
+                        communicationCenter.handleResults(message);
+                    } else if (key.equals(USERNAME)) {
+                        communicationCenter.changeUsername(message);
+                    } else if (key.equals(MUSIC)) {
+                        communicationCenter.setSong(message);
+                    } else if (key.equals(SYSTEMTIME)) {
+
+                        communicationCenter.setSystemTime(message);
+                    }
                 }
-
 
 
 
