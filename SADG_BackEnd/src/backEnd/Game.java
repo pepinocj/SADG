@@ -60,13 +60,9 @@ public class Game {
 	
 	public void startNewRound(){
 		
-
-		
-
-		
 		System.out.println("Start new round with assignment:");
 		successCount = 0;
-		Map<String, String> songAssignments = songAssigner.assignSongs(gameMode, currentState);
+		Map<String, Integer> songAssignments = songAssigner.assignSongs(gameMode, currentState);
 		long systemTime =  System.currentTimeMillis();
 		
 		if(!(startFirstRound > 0)){
@@ -98,6 +94,7 @@ public class Game {
 		System.out.println("Start groovin'!");
 	}
 	
+
 	public void verifyMatch(String pers1, String pers2) throws IOException{
 		MatchType successType = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
 		boolean success = false;

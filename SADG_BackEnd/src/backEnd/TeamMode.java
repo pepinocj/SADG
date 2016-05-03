@@ -5,7 +5,7 @@ import java.util.Map;
 public class TeamMode extends GameMode {
 
 	@Override
-	public Map<String, String> assignSongs(SongPicker songPicker,GameState gameState) {
+	public Map<String, Integer> assignSongs(SongPicker songPicker,GameState gameState) {
 		// TODO Auto-generated method stub
 		return null;
 	}

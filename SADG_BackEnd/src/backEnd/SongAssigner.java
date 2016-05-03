@@ -6,15 +6,16 @@ import java.util.Map;
 public class SongAssigner {
 	
 	SongPicker songPicker = new SongPicker();
-
-	public Map<String, String> assignSongs(GameMode gameMode, GameState gameState) {
+	
+	
+	public Map<String, Integer> assignSongs(GameMode gameMode, GameState gameState) {
 		return gameMode.assignSongs(songPicker, gameState);
 	}
 	
 	
 	
-	private Map<String, String> assignToPlayers(ArrayList<String> songs, ArrayList<Person> players) {
-		Map<String,String> result = Collections.<String,String>emptyMap(); 
+	private Map<String, Integer> assignToPlayers(ArrayList<Integer> songs, ArrayList<Person> players) {
+		Map<String,Integer> result = Collections.<String,Integer>emptyMap(); 
 		for( Person player : players){
 			int size = songs.size();
 			int random = (int) Math.random()*size;

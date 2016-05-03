@@ -1,13 +1,20 @@
 package backEnd;
 
+import java.util.ArrayList;
 import java.util.Map;
 
 public class MolMode extends GameMode {
 
 	@Override
-	public Map<String, String> assignSongs(SongPicker songPicker, GameState gameState) {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, Integer> assignSongs(SongPicker songPicker, GameState gameState) {
+		ArrayList<Person> players = gameState.getPlayers();
+		int nbOfSongsNeeded = players.size()/2  ;
+		ArrayList<Integer> songs = songPicker.pickSongs(nbOfSongsNeeded, gameState.level, gameState.genre);
+		songs.addAll(songs);
+		songs.add(0);
+		assert(players.size() == songs.size());
+		Map<String,Integer> playerSongMap = assignToPlayers(songs, players);
+		return playerSongMap;
 	}
 	
 	public MatchType handleScore( String pers1, String pers2, GameState currentState) {

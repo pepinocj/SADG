@@ -19,7 +19,7 @@ public class GameState {
 	    
 	//persons toch hier want bij handlescore moet ge de score vd persons kunnen aanpassen
 	ArrayList<Person> players;
-	Map<String, String> songAssignments;
+	Map<String, Integer> songAssignments;
 	long timeStarted;
 	public Genre genre;
 	public Level level;
@@ -54,11 +54,11 @@ public class GameState {
 		this.timeStarted = timeToStart;
 	}
 
-	public Map<String, String> getSongAssignments() {
+	public Map<String, Integer> getSongAssignments() {
 		return songAssignments;
 	}
 
-	public void setSongAssignments(Map<String, String> songAssignments2) {
+	public void setSongAssignments(Map<String, Integer> songAssignments2) {
 		this.songAssignments = songAssignments2;
 	}
 	

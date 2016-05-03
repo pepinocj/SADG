@@ -7,8 +7,8 @@ import java.util.Map;
 
 public abstract class GameMode {
 
-	public Map<String, String> assignToPlayers(ArrayList<String> songs, ArrayList<Person> players) {
-		Map<String,String> result = new HashMap<String,String>(); 
+	public Map<String, Integer> assignToPlayers(ArrayList<Integer> songs, ArrayList<Person> players) {
+		Map<String,Integer> result = new HashMap<String,Integer>(); 
 		for( Person player : players){
 			int size = songs.size();
 			int random = (int) Math.random()*size;
@@ -45,6 +45,6 @@ public abstract class GameMode {
 		return (currentState.songAssignments.get(pers1).equals(currentState.songAssignments.get(pers2)));
 	}
 	
-	public abstract Map<String, String> assignSongs(SongPicker songPicker, GameState gameState); 
+	public abstract Map<String, Integer> assignSongs(SongPicker songPicker, GameState gameState); 
 	public abstract MatchType handleScore(String pers1, String pers2, GameState currentState);
 }
