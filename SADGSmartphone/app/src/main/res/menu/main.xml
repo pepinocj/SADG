@@ -2,13 +2,13 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
  >
-    <item android:title="@string/delete_input"
+    <item android:title="Reset name"
         android:id="@+id/first"
         app:showAsAction="always"/>
-    <item android:title="@string/sync"
+    <item android:title="Register"
         android:id="@+id/second"
         app:showAsAction="always"/>
-    <item android:title="@string/setup"
+    <item android:title="Unregister"
         android:id="@+id/third"
         app:showAsAction="always"/>
 </menu>

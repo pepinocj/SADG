@@ -18,6 +18,9 @@ public interface ISender {
 	//TODO uittesten of dat dan effectief tegelijk begint, anders absoluut tijdstip gebruiken
 	public abstract void startRound(long timeToStart) throws IOException;
 	
+	
+	public abstract void sendSystemTime(long systemTime) throws IOException;
+	
 	//Als laatste nodige match is gevonden (vb na eerste drie matchen stop), zend een
 	// signaal naar alle spelers dat deze ronde stopt, aka laat de muziek stoppen, scorebord
 	// komt tevoorschijn?

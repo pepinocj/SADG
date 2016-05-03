@@ -6,6 +6,7 @@
 
     <LinearLayout
         android:orientation="horizontal"
+        android:visibility="gone"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
@@ -45,48 +46,52 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Name"
-        android:id="@+id/textViewName" />
+        android:text="Welcome to Boogie Wonderland! In order to dance your limbs off, reset your name and register to the server! "
+        android:id="@+id/textViewName"
+        android:focusableInTouchMode="false"
+        android:textColor="#443c3c"
+        android:textStyle="bold|italic"
+        android:layout_gravity="center_horizontal" />
+
+    <!--<LinearLayout-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content" >-->
+
+        <!--<Button-->
+            <!--android:id="@+id/button"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+
+            <!--android:gravity="center"-->
+            <!--android:onClick="getNameOfPlayer"-->
+            <!--android:text="Reset name"-->
+            <!--android:textSize="14dp" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/button5"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+
+            <!--android:gravity="center"-->
+            <!--android:onClick="unregister"-->
+            <!--android:text="unregister"-->
+            <!--android:textSize="14dp" />-->
+
+        <!--<Button-->
+            <!--android:id="@+id/button6"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+
+            <!--android:gravity="center"-->
+            <!--android:onClick="register"-->
+            <!--android:text="Register"-->
+            <!--android:textSize="14dp" />-->
+    <!--</LinearLayout>-->
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
-
-        <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:gravity="center"
-            android:onClick="getNameOfPlayer"
-            android:text="Reset name"
-            android:textSize="14dp" />
-
-        <Button
-            android:id="@+id/button5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:gravity="center"
-            android:onClick="unregister"
-            android:text="unregister"
-            android:textSize="14dp" />
-
-        <Button
-            android:id="@+id/button6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:gravity="center"
-            android:onClick="register"
-            android:text="Register"
-            android:textSize="14dp" />
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="wrap_content"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
         android:layout_height="wrap_content" >
 
 
@@ -94,18 +99,61 @@
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
 
             android:gravity="center"
             android:onClick="scanQR"
-            android:text="QR Code"
-            android:textSize="14dp" />
+            android:visibility="visible"
+            android:text="Scan code and verify"
+            android:textSize="14dp"
+            android:textStyle="bold" />
 
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content" >
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Last round results:"
+                android:id="@+id/textView" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewResults" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Last verification results"
+                android:id="@+id/textView2" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewVerify" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Extra feedback info:"
+                android:id="@+id/textView3" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/textViewExtraInfo" />
+
+        </LinearLayout>
 
 
     </LinearLayout>

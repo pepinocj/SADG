@@ -18,6 +18,7 @@ public class Game {
 	int successCount; 
 	int roundCount; 
 	
+	long startFirstRound;
 
 	public Game (){
 		gameMode = new RegularMode();
@@ -26,6 +27,8 @@ public class Game {
 		currentState = new GameState();
 		roundCount = 0;
 		String ipAddress = "localhost";
+		
+		startFirstRound =0;
 		try {
 			sender = new Sender(ipAddress);
 		} catch (IOException | TimeoutException e) {
@@ -56,13 +59,36 @@ public class Game {
 	}
 	
 	public void startNewRound(){
+		
+
+		
+
+		
 		System.out.println("Start new round with assignment:");
 		successCount = 0;
 		Map<String, String> songAssignments = songAssigner.assignSongs(gameMode, currentState);
-		long timeToStart = System.currentTimeMillis()+ 10000; //hier nog plus 10 seconden doen ofzo
+		long systemTime =  System.currentTimeMillis();
+		
+		if(!(startFirstRound > 0)){
+			startFirstRound = System.currentTimeMillis();
+		}
+		
+		long timeToStart = systemTime-startFirstRound+ 10000; //hier nog plus 10 seconden doen ofzo
+		
+		timeToStart = 0;//
+		
 		try {
+			
 			sender.sendMusic(songAssignments);
+			//sender.sendSystemTime(systemTime); //depricated with thread pause
+			
+			try {
+			    Thread.sleep(7500);                 //10000 milliseconds is one second.
+			} catch(InterruptedException ex) {
+			    Thread.currentThread().interrupt();
+			}
 			sender.startRound(timeToStart);
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -94,14 +120,14 @@ public class Game {
 		}
 		
 		else{
-			sender.reportVerification(pers1, pers2, success);
+			sender.reportVerification(pers1, pers2, success); //delete for better performance
 			}
 		System.out.println("Verification: " +successType);
 
 		
 		if(successCount >= maxSuccessCount){
 			String leader = getLeader();
-			sender.announceWinner(leader);
+			sender.announceWinner(leader); // delete for better performance
 			sender.stopRound();
 			roundCount++;
 			if(roundCount <= maxRoundCount){

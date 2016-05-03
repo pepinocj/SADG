@@ -49,10 +49,14 @@ public class Sender implements ISender {
 	@Override
 	public void startRound(long time) throws IOException {
 		String timeToString = String.valueOf(time);
-		for(String id: userIds){
-			String designatedChannel = id + ".start";
-			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, timeToString.getBytes());
-		}
+//		for(String id: userIds){ //TODO
+//			String designatedChannel = id + ".start";
+//			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, timeToString.getBytes());
+//		}
+		
+		channel.basicPublish(EXCHANGE_NAME, "broadCastStart", null, timeToString.getBytes());
+		
+		
 	}
 
 	@Override
@@ -127,6 +131,17 @@ public class Sender implements ISender {
 		String message = "Please chose another username.";
 		String designatedKey = id + ".username";
 		channel.basicPublish(EXCHANGE_NAME, designatedKey, null, message.getBytes());
+	}
+
+	@Override
+	public void sendSystemTime(long systemTime) throws IOException {
+
+		String timeToString = String.valueOf(systemTime);
+		for(String id: userIds){
+			String designatedChannel = id + ".systemTime";
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, timeToString.getBytes());
+		}
+		
 	}
 
 }

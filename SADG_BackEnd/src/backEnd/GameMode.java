@@ -38,7 +38,11 @@ public abstract class GameMode {
 	
 	
 	private boolean checkMatch(String pers1, String pers2, GameState currentState){
-		return (currentState.songAssignments.get(pers1) == (currentState.songAssignments.get(pers2)));
+		System.out.println("check songs");
+		System.out.println("song 1 = " + currentState.songAssignments.get(pers1));
+		System.out.println("song 2 = " + currentState.songAssignments.get(pers2));
+
+		return (currentState.songAssignments.get(pers1).equals(currentState.songAssignments.get(pers2)));
 	}
 	
 	public abstract Map<String, String> assignSongs(SongPicker songPicker, GameState gameState); 

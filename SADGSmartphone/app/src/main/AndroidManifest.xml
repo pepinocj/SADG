@@ -2,12 +2,12 @@
     package="be.kejcs.sadg">
 
 
-    <application android:name="be.kejcs.sadg.SleepJournalApp" android:allowBackup="true" android:label="@string/app_name"
+    <application android:name="be.kejcs.sadg.SleepJournalApp" android:allowBackup="true" android:label="Socially Awkward Dancing Game"
         android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme">
         <uses-permission android:name="android.permission.CAMERA" />
 
         <activity android:name="be.kejcs.sadg.MainActivity"
-            android:label="@string/math_game">
+            android:label="SADG">
             <!-- The intent-filter below makes sure this activity is launched when launching the app -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

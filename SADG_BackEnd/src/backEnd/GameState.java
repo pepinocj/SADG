@@ -7,9 +7,6 @@ import java.util.Map;
 
 
 
-
-
-
 public class GameState {
 
 	
@@ -85,4 +82,6 @@ public class GameState {
 			}
 		}
 	}
+	
+	//public Map<>
 }

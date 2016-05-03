@@ -84,6 +84,7 @@ public class Sender implements  ISender{
         if (!idUser.equals(id)) {
             idUser = id;
         }
+
         channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, id.getBytes());
     }
 

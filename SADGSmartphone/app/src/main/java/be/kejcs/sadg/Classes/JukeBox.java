@@ -42,6 +42,7 @@ public class JukeBox {
     public void playMusicValue(int song){
         stopPlaying();
         mediaPlayer = MediaPlayer.create(activity, song);
+        mediaPlayer.setLooping(true);
         mediaPlayer.seekTo(DELAY);
         mediaPlayer.start();
 
@@ -50,6 +51,7 @@ public class JukeBox {
     public void playMusicID(int songID){
         stopPlaying();
         mediaPlayer = MediaPlayer.create(activity, songs.get(Integer.valueOf( songID)).getMusicValue());
+        mediaPlayer.setLooping(true);
         mediaPlayer.seekTo(DELAY);
         mediaPlayer.start();
 
