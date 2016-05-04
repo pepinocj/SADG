@@ -10,10 +10,12 @@ public class Music {
 
     private int song;
     private int id;
+    private int amountOfSeconds;
     public static int DELAY = 5000;
-    public Music(int song,int id){
+    public Music(int song,int id, int amountOfSecondsBeforePlaying){
         this.song = song;
         this.id = id;
+        this.amountOfSeconds = amountOfSecondsBeforePlaying;
 
     }
 
@@ -30,7 +32,7 @@ public class Music {
         return this.song;
     }
 
-
+    public int getAmountOfSeconds(){return this.amountOfSeconds}
 
 
 
