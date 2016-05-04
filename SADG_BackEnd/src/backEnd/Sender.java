@@ -38,10 +38,10 @@ public class Sender implements ISender {
 	}
 	
 	@Override
-	public void sendMusic(Map<String, String> music) throws IOException { //username en songname 
-		for(Map.Entry<String, String> entry: music.entrySet()){
+	public void sendMusic(Map<String, Integer> music) throws IOException { //username en songname 
+		for(Map.Entry<String, Integer> entry: music.entrySet()){
 			String designatedChannel = entry.getKey() + ".music";
-			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, entry.getValue().getBytes());
+			channel.basicPublish(EXCHANGE_NAME, designatedChannel, null, (Integer.toString(entry.getValue())).getBytes());
 			userIds.add(entry.getKey());
 		}
 	}

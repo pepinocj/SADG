@@ -12,7 +12,7 @@ public interface ISender {
 	// Zend de link/index van de te spelen muziek naar de juiste gebruiker.
 	// Gebruikers zijn al eerder doorgegeven in initiateRound(..). Link kan in de vorm van een
 	// string zijn
-	public abstract void sendMusic(Map<String,String> music) throws IOException;
+	public abstract void sendMusic(Map<String,Integer> music) throws IOException;
 	
 	// Starten van een ronde aka start spelen van muziek over x aantal seconden. 
 	//TODO uittesten of dat dan effectief tegelijk begint, anders absoluut tijdstip gebruiken
