@@ -7,7 +7,9 @@ import com.rabbitmq.client.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -91,7 +93,7 @@ public class Receiver implements IReceiver {
         for(String k:keys){
             channel.queueBind(queueName,EXCHANGE_NAME,userId + "."+k);
         }
-        channel.queueBind(queueName,EXCHANGE_NAME,"broadCastStart"); //TODO BROADCAST
+        channel.queueBind(queueName, EXCHANGE_NAME, "broadCastStart"); //TODO BROADCAST
 
         Consumer consumer = new DefaultConsumer(channel){
             @Override
@@ -102,17 +104,15 @@ public class Receiver implements IReceiver {
 
                 if(key.equals("broadCastStart")){
                     communicationCenter.startRound();//TODO BROADCAST
+                }else if(key.equals("scores")) {
+                    // Map<PlayerName,ScoreInString> players scores
+                    Map<String, String> playersScores = new HashMap<String, String>();
+                    for(String playerAndScore : message.split("/")){
+                        String[] playerScoreDivided = message.split(",");
+                        playersScores.put(playerScoreDivided[0],playerScoreDivided[1]);
+                    }
+                    communicationCenter.receiveScores(playersScores);
                 }
-            }
-            else if(key.equals("scores")) {
-                // Map<PlayerName,ScoreInString> players scores
-                Map<String, String> playersScores = new HashMap<String, String>();
-                for(String playerAndScore : message.split("/")){
-                    String[] playerScoreDivided = message.split(",");
-                    playersScores.put(playerScoreDivided[0],playerScoreDivided[1]);
-                }
-                communicationCenter.receiveScores(playersScores);
-            }
                 else {
 
                     String[] splitted = key.split("\\.");
@@ -137,12 +137,14 @@ public class Receiver implements IReceiver {
                         communicationCenter.setSystemTime(message);
                     }
                 }
-
-
-
-                System.out.println("Received: " + envelope.getRoutingKey() + ": " + message + ".");
-                //communicationCenter.setSong(music);
             }
+
+
+
+
+
+                //communicationCenter.setSong(music);
+
         };
 
         channel.basicConsume(queueName, true, consumer);

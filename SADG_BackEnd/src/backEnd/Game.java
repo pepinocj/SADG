@@ -62,13 +62,16 @@ public class Game {
 
 		System.out.println("Start new round with assignment:");
 		successCount = 0;
-		Map<String, Integer> songAssignments = songAssigner.assignSongs(gameMode, currentState);
-		long systemTime =  System.currentTimeMillis();
 		
 		if(((currentState.players.size()) % 2 )==1){
 			gameMode = new MolMode();
 			
 		}
+		
+		Map<String, Integer> songAssignments = songAssigner.assignSongs(gameMode, currentState);
+		long systemTime =  System.currentTimeMillis();
+		
+		
 
 		if(!(startFirstRound > 0)){
 			startFirstRound = System.currentTimeMillis();

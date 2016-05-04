@@ -7,6 +7,7 @@ import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import be.kejcs.sadg.MainActivity;
@@ -134,5 +135,8 @@ public class CommunicationCenter {
 
 
 
+    }
+
+    public void receiveScores(Map<String, String> playersScores) {
     }
 }
