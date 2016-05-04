@@ -46,9 +46,10 @@ public class Main {
 		    	scanner.close();
 		    }
 		    else if (command.equals("level")){
-		    	System.out.println("Write E for easy or H for hard");
+		    	System.out.println("Write E for easy, M for medium, or H for hard");
 			    String level = scanner.next().toLowerCase();
 			    if(level.equals("e")){game.currentState.level = Level.EASY;} //who needs getters and setters
+			    else if(level.equals("m")){game.currentState.level = Level.MEDIUM;}
 			    else{game.currentState.level= Level.HARD;}
 		    }
 		    else if (command.equals("level")){

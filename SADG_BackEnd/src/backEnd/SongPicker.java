@@ -36,10 +36,9 @@ public class SongPicker {
 				 String danceEntry = nextLine[5].trim().toLowerCase();
 				 if (danceEntry.equals("yes")){ddance = 2;}
 				 else if (danceEntry.equals("kinda")){ddance = 1;}
-				 int startAt = Integer.parseInt(nextLine[4]);
 //			 System.out.println(nextLine[0] + " " + nextLine[5] + " " + nextLine[4]); //cheeeck	
 //    	 	 System.out.println(nextLine[0] + " " + ddance + " " + startAt);
-				 availableSongs.add(new Song(i, ddance, startAt));
+				 availableSongs.add(new Song(i, ddance));
 				 i++;
 				}
 		     reader.close();
@@ -78,12 +77,27 @@ public class SongPicker {
 
 	
 	private ArrayList<Song> filter(ArrayList<Song> temp, Level level, Genre genre) {
-		//itereer hier over alle liedjes en filter die met genre en level uit
-		//lukt pas wanneer we een idee hebben hoe concept liedje er uit ziet
-//		if (level.equals(Level.EASY)){
-//			return new ArrayList<String>(Arrays.asList("1"));
-//			}
-		return temp;
+//		public enum Level {
+//			ALL, EASY, MEDIUM, HARD};
+		int distDance = 0;
+		 switch (level) {
+         case ALL: return temp;
+         case EASY:  distDance = 2;
+                  break;
+         case MEDIUM: distDance = 1;
+                  break;
+         case HARD:  distDance = 0;
+                  break;
+		 }
+        ArrayList<Song> result = new ArrayList<Song>();
+        
+        for(Song song : temp ){
+        	if (song.getDance() == distDance){
+        		result.add(song);
+        		}
+        	}
+        
+		return result;
 	}
 	
 	
