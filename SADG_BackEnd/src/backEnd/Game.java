@@ -96,6 +96,7 @@ public class Game {
 	
 
 	public void verifyMatch(String pers1, String pers2) throws IOException{
+		if(!currentState.players.contains(pers1) || !currentState.players.contains(pers2)){System.out.println("OMG er is een van de spelers illegaal whaat");}
 		MatchType successType = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
 		boolean success = false;
 		if(successType == MatchType.SUCCESS){
