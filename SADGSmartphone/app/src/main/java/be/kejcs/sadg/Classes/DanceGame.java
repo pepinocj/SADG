@@ -57,7 +57,7 @@ public class DanceGame extends Handler {
         this.jukeBox.addMusic(new Music(R.raw.earthquake,26,0));
         this.jukeBox.addMusic(new Music(R.raw.freestyler,27,53));
         this.jukeBox.addMusic(new Music(R.raw.tnhgt,28,24));
-        this.jukeBox.addMusic(new Music(R.raw.freekydiedieantwoord,29,10));
+        this.jukeBox.addMusic(new Music(R.raw.freekydieantwoord,29,10));
         this.jukeBox.addMusic(new Music(R.raw.louder,30,21));
         this.jukeBox.addMusic(new Music(R.raw.saltnpepapushit,31,112));
         this.jukeBox.addMusic(new Music(R.raw.talkdirty,32,30));
