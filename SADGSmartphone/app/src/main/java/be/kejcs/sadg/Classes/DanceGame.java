@@ -28,11 +28,49 @@ public class DanceGame extends Handler {
         this.activity = activity;
         this.jukeBox = new JukeBox(activity);
 
-        this.jukeBox.addMusic(new Music(R.raw.dawin,0));
-        this.jukeBox.addMusic(new Music(R.raw.drake,1));
-        this.jukeBox.addMusic(new Music(R.raw.freestyler,2));
-        this.jukeBox.addMusic(new Music(R.raw.sorry, 3));
-        this.jukeBox.addMusic(new Music(R.raw.work,4));
+        this.jukeBox.addMusic(new Music(R.raw.nyancat,0,0));
+        this.jukeBox.addMusic(new Music(R.raw.harlemshake,1,0));
+        this.jukeBox.addMusic(new Music(R.raw.steps,2,0));
+        this.jukeBox.addMusic(new Music(R.raw.sugarhillapacha,3,10));
+        this.jukeBox.addMusic(new Music(R.raw.chachaslide,4,30));
+        this.jukeBox.addMusic(new Music(R.raw.souljaboy,5));
+        this.jukeBox.addMusic(new Music(R.raw.gangnam,6,54));
+        this.jukeBox.addMusic(new Music(R.raw.inzaire,7,0));
+        this.jukeBox.addMusic(new Music(R.raw.putring,8,0));
+        this.jukeBox.addMusic(new Music(R.raw.ketchup,9,26));
+        this.jukeBox.addMusic(new Music(R.raw.thriller,10,32));
+        this.jukeBox.addMusic(new Music(R.raw.silentowatchme,11,15));
+        this.jukeBox.addMusic(new Music(R.raw.bubblebutt,12,74));
+        this.jukeBox.addMusic(new Music(R.raw.siacheapthrills,13,20));
+        this.jukeBox.addMusic(new Music(R.raw.drankdrugs,14,8));
+        this.jukeBox.addMusic(new Music(R.raw.schmurda,15,10));
+        this.jukeBox.addMusic(new Music(R.raw.drake,16,20));
+        this.jukeBox.addMusic(new Music(R.raw.jumparound,17,0));
+        this.jukeBox.addMusic(new Music(R.raw.kungfu,18,0));
+        this.jukeBox.addMusic(new Music(R.raw.roboto,19,40));
+        this.jukeBox.addMusic(new Music(R.raw.mundianpanjabi,20,24));
+        this.jukeBox.addMusic(new Music(R.raw.partyrock,21,44));
+        this.jukeBox.addMusic(new Music(R.raw.shakeitoff,22,29));
+        this.jukeBox.addMusic(new Music(R.raw.uptown,23,14));
+        this.jukeBox.addMusic(new Music(R.raw.onelove,24,0));
+        this.jukeBox.addMusic(new Music(R.raw.skrillexbangarang,25,14));
+        this.jukeBox.addMusic(new Music(R.raw.earthquake,26,0));
+        this.jukeBox.addMusic(new Music(R.raw.freestyler,27,53));
+        this.jukeBox.addMusic(new Music(R.raw.tnhgt,28,24));
+        this.jukeBox.addMusic(new Music(R.raw.freekydiedieantwoord,29,10));
+        this.jukeBox.addMusic(new Music(R.raw.louder,30,21));
+        this.jukeBox.addMusic(new Music(R.raw.saltnpepapushit,31,112));
+        this.jukeBox.addMusic(new Music(R.raw.talkdirty,32,30));
+        this.jukeBox.addMusic(new Music(R.raw.temperature,33,0));
+        this.jukeBox.addMusic(new Music(R.raw.turndown,34,0));
+        this.jukeBox.addMusic(new Music(R.raw.work,35,14));
+        this.jukeBox.addMusic(new Music(R.raw.jayz,36,0));
+        this.jukeBox.addMusic(new Music(R.raw.danceofsugar,37,9));
+
+
+
+
+
 
         Calendar c = Calendar.getInstance();
         c.setTimeInMillis(0);
