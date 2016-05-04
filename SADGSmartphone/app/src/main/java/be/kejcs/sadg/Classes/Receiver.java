@@ -102,7 +102,18 @@ public class Receiver implements IReceiver {
 
                 if(key.equals("broadCastStart")){
                     communicationCenter.startRound();//TODO BROADCAST
-                }else {
+                }
+            }
+            else if(key.equals("scores")) {
+                // Map<PlayerName,ScoreInString> players scores
+                Map<String, String> playersScores = new HashMap<String, String>();
+                for(String playerAndScore : message.split("/")){
+                    String[] playerScoreDivided = message.split(",");
+                    playersScores.put(playerScoreDivided[0],playerScoreDivided[1]);
+                }
+                communicationCenter.receiveScores(playersScores);
+            }
+                else {
 
                     String[] splitted = key.split("\\.");
 
