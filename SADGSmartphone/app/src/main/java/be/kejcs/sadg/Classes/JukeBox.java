@@ -50,9 +50,10 @@ public class JukeBox {
 
     public void playMusicID(int songID){
         stopPlaying();
-        mediaPlayer = MediaPlayer.create(activity, songs.get(Integer.valueOf( songID)).getMusicValue());
+        Music m =  songs.get(Integer.valueOf(songID));
+        mediaPlayer = MediaPlayer.create(activity, m.getMusicValue());
         mediaPlayer.setLooping(true);
-        mediaPlayer.seekTo(DELAY);
+        mediaPlayer.seekTo(m.getAmountOfSeconds()*1000);
         mediaPlayer.start();
 
     }

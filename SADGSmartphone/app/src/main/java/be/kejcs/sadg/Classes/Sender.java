@@ -1,5 +1,7 @@
 package be.kejcs.sadg.Classes;
 
+import android.os.Looper;
+
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
@@ -18,6 +20,7 @@ public class Sender implements  ISender{
 
     private String idUser;
     private ConnectionFactory connectionFactory;
+    private CommunicationCenter communicationCenter;
     private Thread thread;
 
     private void resetThread(){
@@ -27,8 +30,10 @@ public class Sender implements  ISender{
                 //  while(true){
                 try{
                     setUpConnection();
-                }catch (IOException | TimeoutException e){
+                }catch (IOException | NoConnectionMadeException| TimeoutException e){
                     e.printStackTrace();
+                    Looper.prepare();
+                    communicationCenter.signalCommunicationException();
                 }
                 // }
             }
@@ -40,9 +45,10 @@ public class Sender implements  ISender{
 
     }
 
-    public Sender(ConnectionFactory connectionFactory, String user) {
+    public Sender(ConnectionFactory connectionFactory, String user,CommunicationCenter communicationCenter) {
        this.connectionFactory = connectionFactory;
         idUser = user;
+        this.communicationCenter = communicationCenter;
         //resetThread();
     }
 
@@ -50,15 +56,20 @@ public class Sender implements  ISender{
         this.idUser = s;
     }
 
-    public void setUpConnection()throws IOException, TimeoutException{
-        if(connection != null){
+    public void setUpConnection()throws IOException, TimeoutException, NoConnectionMadeException{
+        if(connection != null && !connection.isOpen()){
             connection.close();
 
         }
         connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
+
+        if(channel == null){
+            throw new NoConnectionMadeException();
+        }
         channel.exchangeDeclare(EXCHANGE_NAME, "direct");
+
     }
 
     public void run(){
@@ -74,15 +85,21 @@ public class Sender implements  ISender{
     }
 
     @Override
-    public void sendVerify(String id1, String id2) throws IOException {
+    public void sendVerify(String id1, String id2) throws IOException, NoConnectionMadeException {
         String message = id1+","+id2;
+        if(channel == null){
+            throw new NoConnectionMadeException();
+        }
         channel.basicPublish(EXCHANGE_NAME, "verify", null, message.getBytes());
     }
 
     @Override
-    public void beginAsPlayer(String id) throws IOException {
+    public void beginAsPlayer(String id) throws IOException, NoConnectionMadeException {
         if (!idUser.equals(id)) {
             idUser = id;
+        }
+        if(channel == null){
+            throw new NoConnectionMadeException();
         }
 
         channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, id.getBytes());
@@ -100,7 +117,10 @@ public class Sender implements  ISender{
     }
 
         @Override
-        public void removeAsPlayer(String id) throws IOException {
+        public void removeAsPlayer(String id) throws IOException, NoConnectionMadeException {
+            if(channel == null){
+                throw new NoConnectionMadeException();
+            }
                 channel.basicPublish(EXCHANGE_NAME,"removePlayer", null, id.getBytes());
             }
 }

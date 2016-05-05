@@ -1,5 +1,6 @@
 package be.kejcs.sadg.Classes;
 
+import android.os.Looper;
 import android.util.Log;
 
 import com.rabbitmq.client.*;
@@ -41,8 +42,10 @@ public class Receiver implements IReceiver {
                 //  while(true){
                 try{
                     setUpConnection();
-                }catch (IOException | TimeoutException e){
+                }catch (IOException | NoConnectionMadeException| TimeoutException e){
                     e.printStackTrace();
+                    Looper.prepare();
+                    communicationCenter.signalCommunicationException();
                 }
                 // }
             }
@@ -76,7 +79,7 @@ public class Receiver implements IReceiver {
 
 
 
-    public void setUpConnection()throws IOException, TimeoutException{
+    public void setUpConnection()throws IOException, TimeoutException, NoConnectionMadeException{
 
         if(connection != null){
             connection.close();
@@ -85,6 +88,9 @@ public class Receiver implements IReceiver {
         connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
+
+
+
         channel.exchangeDeclare(EXCHANGE_NAME, "direct");
         queueName = channel.queueDeclare().getQueue();
 

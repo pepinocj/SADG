@@ -7,12 +7,12 @@ import java.io.IOException;
  */
 public interface ISender {
 
-    public abstract void sendVerify(String id1, String id2)throws IOException;
+    public abstract void sendVerify(String id1, String id2)throws IOException, NoConnectionMadeException;
 
-    public abstract void beginAsPlayer(String id) throws IOException;
+    public abstract void beginAsPlayer(String id) throws IOException, NoConnectionMadeException;
 
     public abstract void closeCommunication();
 
-    public abstract void removeAsPlayer(String id) throws IOException;
+    public abstract void removeAsPlayer(String id) throws IOException, NoConnectionMadeException;
 
 }

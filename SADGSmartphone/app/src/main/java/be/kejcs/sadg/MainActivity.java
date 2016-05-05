@@ -6,11 +6,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -20,7 +26,10 @@ import android.widget.Toast;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import be.kejcs.sadg.Classes.CommunicationCenter;
@@ -36,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     static final String ACTION_SCAN = "com.google.zxing.client.android.SCAN";
 
-    private Button buttonPlayNow;
+    private Button reconnect;
     private Button buttonPlayDelay;
     private Button buttonStop;
 
@@ -56,8 +65,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        buttonPlayNow = (Button) findViewById(R.id.buttonPlayNow);
-        buttonPlayDelay = (Button) findViewById(R.id.buttonPlayDelay);
+        reconnect = (Button) findViewById(R.id.reconnect);
         buttonStop = (Button) findViewById(R.id.buttonStop);
 
         tvResults = (TextView) findViewById(R.id.textViewResults);
@@ -107,8 +115,11 @@ public class MainActivity extends AppCompatActivity {
                         ((ImageView) findViewById(R.id.imageViewQR)).setImageBitmap(QRModule.getQRBitmap(player.name));
                         ((TextView) findViewById(R.id.textViewName)).setText(player.name);
                         communicationCenter.resetPlayer(player);
-                        communicationCenter.startConnectionThreads();
                         ((Button) findViewById(R.id.button2)).setVisibility(View.VISIBLE);
+                        ((Button) findViewById(R.id.reconnect)).setVisibility(View.VISIBLE);
+                        ((Button) findViewById(R.id.buttonStop)).setVisibility(View.VISIBLE);
+
+                        communicationCenter.startConnectionThreads();
 
 
                     }
@@ -138,31 +149,18 @@ public class MainActivity extends AppCompatActivity {
         //genericListenerBinder(buttonExample,ExampleActivity.class);
         //genericListenerBinder(buttonEvents,EventActivity.class);
 
-        buttonPlayNow.setOnClickListener(new View.OnClickListener() {
+        reconnect.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
                 //buttonExample.setEnabled(false);
-                Random gen = new Random();
-
-                int song = gen.nextInt(4);
-                danceGame.playSong(song);
+                communicationCenter.startConnectionThreads();
 
 
             }
         });
 
-        buttonPlayDelay.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick(View v) {
-                //buttonTimeLine.setEnabled(false);
-
-                Calendar t = Calendar.getInstance();
-                t.setTimeInMillis(t.getTimeInMillis()+30000);
-                danceGame.playSongAt(0, t,false,0);
-            }
-        });
 
 
 
@@ -206,6 +204,30 @@ public class MainActivity extends AppCompatActivity {
             case R.id.third:
                 unregister(null);
                 return true;
+            case R.id.ip:
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+                alertDialogBuilder.setTitle("What is the IP-adress of the server?");
+                alertDialogBuilder.setMessage("Current: "+player.ip);
+                final EditText input = new EditText(this);
+                input.setText(player.ip);
+                alertDialogBuilder.setView(input);
+
+                alertDialogBuilder.setCancelable(false)
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                String text = input.getText().toString();
+
+                                player.ip = text;
+                                communicationCenter.resetPlayer(player);
+
+                                communicationCenter.startConnectionThreads();
+
+
+                            }
+                        });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+                alertDialog.show();
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -233,10 +255,75 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void showResultText(String message){
-        tvResults.setText( message);
+        tvResults.setText(message);
     }
 
     public void showVerifyResultText(String message){
         tvVerify.setText( message);
     }
+
+    public void popUpToastMessage(String s){
+        Toast.makeText(this, s, Toast.LENGTH_LONG).show();
+    }
+
+    public void showLeaderBoard(Map<String,String> lb){
+        String result = "";
+        for(String s:lb.keySet()){
+            result = result + s + ": " + lb.get(s)+" \n";
+        }
+
+        tvExtraInfo.setText(result);
+    }
+//
+//    @Override
+//    public View onCreateView(LayoutInflater inflater,
+//                             ViewGroup container,
+//                             Bundle savedInstanceState) {
+//        View result=inflater.inflate(R.layout.pager, container, false);
+//        ViewPager pager=(ViewPager)result.findViewById(R.id.pager);
+//
+//        setupViewPager(pager);
+//
+//        tabLayout = (TabLayout) getActivity().findViewById(R.id.tabs);
+//        tabLayout.setupWithViewPager(pager);
+//        tabLayout.setVisibility(View.VISIBLE);
+//
+//        return(result);
+//    }
+//
+//    private void setupViewPager(ViewPager viewPager) {
+//        SleepDiaryPageAdapter adapter = new SleepDiaryPageAdapter(getChildFragmentManager());
+//        adapter.addFragment(new EventsFragment(), "Events");
+//        adapter.addFragment(new DiaryFragment(), "Diary");
+//        viewPager.setAdapter(adapter);
+//    }
+//
+//    private class SleepDiaryPageAdapter extends FragmentPagerAdapter {
+//        private final List<Fragment> mFragmentList = new ArrayList<>();
+//        private final List<String> mFragmentTitleList = new ArrayList<>();
+//
+//        public SleepDiaryPageAdapter(FragmentManager mgr) {
+//            super(mgr);
+//        }
+//
+//        @Override
+//        public Fragment getItem(int position) {
+//            return mFragmentList.get(position);
+//        }
+//
+//        @Override
+//        public int getCount() {
+//            return mFragmentList.size();
+//        }
+//
+//        public void addFragment(Fragment fragment, String title) {
+//            mFragmentList.add(fragment);
+//            mFragmentTitleList.add(title);
+//        }
+//
+//        @Override
+//        public CharSequence getPageTitle(int position) {
+//            return mFragmentTitleList.get(position);
+//        }
+//    }
 }

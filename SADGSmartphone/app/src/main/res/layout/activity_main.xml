@@ -1,40 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
 
     <LinearLayout
         android:orientation="horizontal"
-        android:visibility="gone"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" >
+        android:visibility="visible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="1">
 
         <Button
-            style="@style/Button"
-            android:id="@+id/buttonPlayNow"
-            android:text="Play now"
+            android:id="@+id/reconnect"
+            android:text="Reconnect"
             android:layout_gravity="center_horizontal"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
-
-
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Play delay"
-            android:id="@+id/buttonPlayDelay"
-            android:layout_gravity="center_horizontal" />
-
+            android:layout_height="fill_parent"
+            android:layout_weight="0.99"
+            android:visibility="invisible" />
 
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Stop"
+            android:layout_width="200dp"
+            android:layout_height="fill_parent"
+            android:text="Stop music"
             android:id="@+id/buttonStop"
-            android:layout_gravity="center_horizontal" />
+            android:layout_gravity="center_horizontal"
+            android:visibility="invisible" />
     </LinearLayout>
 
     <ImageView
@@ -104,7 +101,7 @@
 
             android:gravity="center"
             android:onClick="scanQR"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:text="Scan code and verify"
             android:textSize="14dp"
             android:textStyle="bold" />
@@ -159,3 +156,4 @@
     </LinearLayout>
 
 </LinearLayout>
+</ScrollView>
