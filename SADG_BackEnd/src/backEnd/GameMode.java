@@ -21,7 +21,8 @@ public abstract class GameMode {
 	
 	public boolean regularMatch(String pers1, String pers2, GameState currentState) {
 		boolean isMatch = checkMatch(pers1, pers2, currentState);
-		int secondsPassed = (int) ((System.currentTimeMillis() - currentState.timeStarted) * 60);
+		int secondsPassed = (int) ((System.currentTimeMillis() - currentState.timeStarted) * 1000);
+		System.out.println("seconds passed = " + secondsPassed);
 		if(isMatch){
 			System.out.println("Congratulations! It's a match");
 			currentState.addToScore(pers1, secondsPassed);
