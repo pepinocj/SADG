@@ -47,8 +47,14 @@ public class Game {
 
 	public void addPlayer(String namePerson){
 		Person person = new Person(namePerson);
-		currentState.addPlayer(person);
-		System.out.println("Person " + person.getUserName() + " was added.");
+		if(currentState.players.contains(person)){
+			System.out.println("person already exists");
+		}
+		else{
+			currentState.addPlayer(person);
+			System.out.println("Person " + person.getUserName() + " was added.");
+		}
+		
 	}
 
 	public void removePlayer(String namePerson){
