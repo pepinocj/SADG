@@ -154,6 +154,7 @@ public class Game {
 			String leader = getLeader();
 			System.out.println("the leader is " + leader);
 			sender.announceWinner(leader); // delete for better performance
+			sender.sendScoreBoard(getScores());
 			sender.stopRound();
 			roundCount++;
 			System.out.println("the roundcount is " + roundCount);
