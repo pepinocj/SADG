@@ -103,8 +103,11 @@ public class Sender implements ISender {
 	@Override
 	public void sendScoreBoard(Map<String, Integer> scores){
 		String giantString = "";
+		System.out.println("printing the scores: ");
 		for (Map.Entry<String, Integer> entry : scores.entrySet()){
+			
 			giantString += entry.getKey() + "," + entry.getValue() + "/"; 
+			System.out.println("" + entry.getKey() + ":  " + entry.getValue());
 		}
 		try {
 			channel.basicPublish(EXCHANGE_NAME, "scores", null, giantString.getBytes());

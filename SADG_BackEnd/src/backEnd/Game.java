@@ -47,6 +47,7 @@ public class Game {
 
 	public void addPlayer(String namePerson){
 		Person person = new Person(namePerson.split(":")[1]);
+		System.out.println("Trying to add player " + person);
 		if(currentState.players.contains(person)){
 			sender.chooseNewName(namePerson.split(":")[0], "not ok");
 			System.out.println("person with name " + namePerson.split(":")[1] + "  already exists");
@@ -74,6 +75,7 @@ public class Game {
 		successCount = 0;
 		
 		if(((currentState.players.size()) % 2 )==1){
+			System.out.println("changing to molmode");
 			gameMode = new MolMode();
 			
 		}
@@ -91,6 +93,7 @@ public class Game {
 
 		timeToStart = 0;//
 
+		System.out.println("sending the music");
 		sender.sendMusic(songAssignments);
 		//sender.sendSystemTime(systemTime); //depricated with thread pause
 
@@ -107,14 +110,23 @@ public class Game {
 
 
 	public void verifyMatch(String pers1, String pers2) throws IOException{
-		if(!currentState.players.contains(pers1) || !currentState.players.contains(pers2)){System.out.println("OMG er is een van de spelers illegaal whaat");}
+		if(!currentState.players.contains(pers1)){
+			System.out.println("OMG speler " + pers1 + "(eerste) is illegaal whaat");
+		}
+		else if(!currentState.players.contains(pers2)){
+			System.out.println("OMG speler " + pers2 + "(tweede) is illegaal whaat");
+		}
+		
+		
 		MatchType successType = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
 		boolean success = false;
 		if(successType == MatchType.SUCCESS){
+			System.out.println("oh boy what a succes");
 			successCount++ ;
 			success = true; }
 
 		if (successType == MatchType.MOLMATCH){
+			System.out.println("molmatch!");
 			successCount++ ;
 			String mol;
 			String victim;
@@ -125,10 +137,12 @@ public class Game {
 			else{
 				mol = pers2;
 				victim =pers1;}
+			System.out.println("the traitor is " + mol + " and the victim is " + "victim");
 			sender.reportMolVerification(mol, victim);
 		}
 
 		else{
+			System.out.println("No match, too bad bruh");
 			sender.reportVerification(pers1, pers2, success); //delete for better performance
 		}
 		System.out.println("Verification: " +successType);
@@ -136,9 +150,11 @@ public class Game {
 
 		if(successCount >= maxSuccessCount){
 			String leader = getLeader();
+			System.out.println("the leader is " + leader);
 			sender.announceWinner(leader); // delete for better performance
 			sender.stopRound();
 			roundCount++;
+			System.out.println("the roundcount is " + roundCount);
 			if(roundCount <= maxRoundCount){
 				this.startNewRound();
 			}

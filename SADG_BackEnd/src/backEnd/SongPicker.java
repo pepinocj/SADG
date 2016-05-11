@@ -44,10 +44,11 @@ public class SongPicker {
 		     reader.close();
 
 		} catch (NumberFormatException e) {
+			System.out.println("oh boy a numberformatexception in Songpicker. This is in the csv parser");
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
+			System.out.println("oh boy an IOExcepiton in Songpicker. This is in the csv parser");
 			e.printStackTrace();
 		}
 
