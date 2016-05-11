@@ -22,8 +22,9 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.provider.Settings.Secure;
 import com.google.zxing.integration.android.IntentIntegrator;
+
 import com.google.zxing.integration.android.IntentResult;
 
 import java.util.ArrayList;
@@ -60,6 +61,8 @@ public class MainActivity extends AppCompatActivity {
     public TextView tvVerify;
     public TextView tvExtraInfo;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,8 +79,12 @@ public class MainActivity extends AppCompatActivity {
 
 
         this.danceGame = new DanceGame(this);
-        this.player = new Player("DEFAULTPLAYER",Player.IP_ADRESS);
+        this.player = new Player("DEFAULTPLAYER",Player.IP_ADRESS,Secure.getString(this.getContentResolver(),
+                Secure.ANDROID_ID)
+        );
         this.communicationCenter = new CommunicationCenter(danceGame,player,this);
+
+
 
 
 
@@ -114,11 +121,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.d("givenName", player.name);
                         ((ImageView) findViewById(R.id.imageViewQR)).setImageBitmap(QRModule.getQRBitmap(player.name));
                         ((TextView) findViewById(R.id.textViewName)).setText(player.name);
-                        communicationCenter.resetPlayer(player);
+                        //communicationCenter.resetPlayer(player);
                         ((Button) findViewById(R.id.button2)).setVisibility(View.VISIBLE);
                         ((Button) findViewById(R.id.reconnect)).setVisibility(View.VISIBLE);
                         ((Button) findViewById(R.id.buttonStop)).setVisibility(View.VISIBLE);
-
+                        //((Item) findViewById(R.id.first)).setVisibility(View.INVISIBLE);
                         communicationCenter.startConnectionThreads();
 
 
@@ -243,8 +250,8 @@ public class MainActivity extends AppCompatActivity {
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanResult != null) {
-            //Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
-            tvExtraInfo.setText(scanResult.getContents());
+            Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
+            //tvExtraInfo.setText(scanResult.getContents());
             communicationCenter.lastScanTime =System.currentTimeMillis();
             communicationCenter.verify(player.name, scanResult.getContents());
 
