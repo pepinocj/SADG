@@ -24,7 +24,7 @@ public class CommunicationCenter {
     private Sender sender;
     private Receiver receiver;
     private MainActivity mainActivity;
-
+    private Player  player;
 
     public boolean hasScannedInThisRound;
     public long lastScanTime;
@@ -63,14 +63,15 @@ public class CommunicationCenter {
         this.mainActivity = mainActivity;
         this.roundParameters = new RoundParameters();
         this.danceGame = danceGame;
+        this.player = player;
         ConnectionFactory factory = new ConnectionFactory();
         // Voor testen ipaddress = "localhost"
         factory.setHost(player.ip);
         // Initialisatie van connection
         factory.setUsername("player");
         factory.setPassword("player");
-        this.sender = new Sender(factory,player.name,this);
-        this.receiver = new Receiver(factory,player.name,this);
+        this.sender = new Sender(factory,player,this);
+        this.receiver = new Receiver(factory,player,this);
 
 
         this.hasScannedInThisRound = false;
@@ -88,8 +89,9 @@ public class CommunicationCenter {
     }
 
     public void resetPlayer(Player p){
-        this.sender.resetUserID(p.name);
-        this.receiver.resetUserID(p.name);
+//        this.sender.resetUserID(p.name);
+//        this.receiver.resetUserID(p.name);
+        //DEPRECATED
 
     }
 
@@ -148,5 +150,13 @@ public class CommunicationCenter {
     public void signalCommunicationException(){
         
         mainActivity.popUpToastMessage("Something went wrong: reconnect or try changing the IP address");
+    }
+
+    public void handleAcknowledgement(boolean ok){
+        if(ok){
+            mainActivity.popUpToastMessage("You are registered!");
+        }else{
+            mainActivity.popUpToastMessage("You're name is already in use! >:(  CHANGE IT");
+        }
     }
 }

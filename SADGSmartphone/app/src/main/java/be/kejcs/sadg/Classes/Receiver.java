@@ -34,6 +34,7 @@ public class Receiver implements IReceiver {
     private final CommunicationCenter communicationCenter;
     private ConnectionFactory connectionFactory;
     private Thread thread;
+    private Player player;
 
     private void resetThread(){
         Thread t  = new Thread(new Runnable() {
@@ -56,10 +57,11 @@ public class Receiver implements IReceiver {
 
     }
 
-    public Receiver(ConnectionFactory connectionFactory, String userId,CommunicationCenter communicationCenter) {
+    public Receiver(ConnectionFactory connectionFactory, Player player,CommunicationCenter communicationCenter) {
 
         this.connectionFactory =connectionFactory;
-        this.userId = userId;
+        this.player = player;
+        this.userId = player.key;
         this.communicationCenter = communicationCenter;
         //resetThread();
 
@@ -97,10 +99,11 @@ public class Receiver implements IReceiver {
 
         List<String> keys = Arrays.asList(STOP,START,MUSIC,RESULTS,VERIFYRESULTS,SYSTEMTIME);
         for(String k:keys){
-            channel.queueBind(queueName,EXCHANGE_NAME,userId + "."+k);
+            channel.queueBind(queueName,EXCHANGE_NAME,player.name + "."+k);
         }
-        channel.queueBind(queueName, EXCHANGE_NAME, "broadCastStart"); //TODO BROADCAST
 
+        channel.queueBind(queueName, EXCHANGE_NAME, "broadCastStart"); //TODO BROADCAST
+        channel.queueBind(queueName, EXCHANGE_NAME, userId);
         Consumer consumer = new DefaultConsumer(channel){
             @Override
             public void handleDelivery(String consumerTag, Envelope envelope,
@@ -108,13 +111,17 @@ public class Receiver implements IReceiver {
                 String message = new String(body, "UTF-8");
                 String key = envelope.getRoutingKey();
 
-                if(key.equals("broadCastStart")){
-                    communicationCenter.startRound();//TODO BROADCAST
+                if(key.equals("broadCastStart")) {
+                    communicationCenter.startRound();
+                }else if(key.equals(userId)){
+                    //communicationCenter.startRound();
+                    communicationCenter.handleAcknowledgement(message.equals("ok"));
+
                 }else if(key.equals("scores")) {
                     // Map<PlayerName,ScoreInString> players scores
                     Map<String, String> playersScores = new HashMap<String, String>();
                     for(String playerAndScore : message.split("/")){
-                        String[] playerScoreDivided = message.split(",");
+                        String[] playerScoreDivided = playerAndScore.split(",");
                         playersScores.put(playerScoreDivided[0],playerScoreDivided[1]);
                     }
                     communicationCenter.receiveScores(playersScores);
@@ -141,6 +148,9 @@ public class Receiver implements IReceiver {
                     } else if (key.equals(SYSTEMTIME)) {
 
                         communicationCenter.setSystemTime(message);
+                    } else if (key.equals("okname")) {
+
+                        //TODO
                     }
                 }
             }

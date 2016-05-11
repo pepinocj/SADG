@@ -8,9 +8,11 @@ public class Player {
     public int id;
     public String name;
     public String ip;
-    public Player(String name, String ip){
+    public String key;
+    public Player(String name, String ip,String android_id){
         this.name = name;
         this.id = 0;
         this.ip = ip;
+        this.key = android_id;
     }
 }

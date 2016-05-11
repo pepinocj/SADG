@@ -19,6 +19,7 @@ public class Sender implements  ISender{
     private Connection connection;
 
     private String idUser;
+    private Player player;
     private ConnectionFactory connectionFactory;
     private CommunicationCenter communicationCenter;
     private Thread thread;
@@ -45,9 +46,10 @@ public class Sender implements  ISender{
 
     }
 
-    public Sender(ConnectionFactory connectionFactory, String user,CommunicationCenter communicationCenter) {
+    public Sender(ConnectionFactory connectionFactory, Player player,CommunicationCenter communicationCenter) {
        this.connectionFactory = connectionFactory;
-        idUser = user;
+        this.player = player;
+        idUser = player.key;
         this.communicationCenter = communicationCenter;
         //resetThread();
     }
@@ -95,14 +97,12 @@ public class Sender implements  ISender{
 
     @Override
     public void beginAsPlayer(String id) throws IOException, NoConnectionMadeException {
-        if (!idUser.equals(id)) {
-            idUser = id;
-        }
+
         if(channel == null){
             throw new NoConnectionMadeException();
         }
 
-        channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, id.getBytes());
+        channel.basicPublish(EXCHANGE_NAME, "addPlayer", null, (idUser+":"+id).getBytes());
     }
 
     @Override
