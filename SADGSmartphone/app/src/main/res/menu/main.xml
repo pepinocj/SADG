@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
  >
-    <item android:title="Reset name"
+    <item android:title="Set name"
         android:id="@+id/first"
         app:showAsAction="always"/>
     <item android:title="Register"
@@ -10,5 +10,8 @@
         app:showAsAction="always"/>
     <item android:title="Unregister"
         android:id="@+id/third"
+        app:showAsAction="always"/>
+    <item android:title="IP"
+        android:id="@+id/ip"
         app:showAsAction="always"/>
 </menu>

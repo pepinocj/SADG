@@ -32,7 +32,7 @@ public class Music {
         return this.song;
     }
 
-    public int getAmountOfSeconds(){return this.amountOfSeconds}
+    public int getAmountOfSeconds(){return this.amountOfSeconds;}
 
 
 

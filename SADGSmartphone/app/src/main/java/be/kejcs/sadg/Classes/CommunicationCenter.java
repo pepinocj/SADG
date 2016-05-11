@@ -1,5 +1,6 @@
 package be.kejcs.sadg.Classes;
 
+import android.os.Looper;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -7,6 +8,7 @@ import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
 import java.util.Calendar;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 import be.kejcs.sadg.MainActivity;
@@ -67,7 +69,7 @@ public class CommunicationCenter {
         // Initialisatie van connection
         factory.setUsername("player");
         factory.setPassword("player");
-        this.sender = new Sender(factory,player.name);
+        this.sender = new Sender(factory,player.name,this);
         this.receiver = new Receiver(factory,player.name,this);
 
 
@@ -94,8 +96,9 @@ public class CommunicationCenter {
     public void addPlayer(String p){
         try{
             this.sender.beginAsPlayer(p);
-        }catch (IOException e){
+        }catch (IOException|NoConnectionMadeException e){
             e.printStackTrace();
+            signalCommunicationException();
         }
 
     }
@@ -108,8 +111,9 @@ public class CommunicationCenter {
     public void verify(String s1,String s2){
         try{
             sender.sendVerify(s1, s2);
-        }catch (IOException e){
+        }catch (IOException|NoConnectionMadeException e){
             e.printStackTrace();
+            signalCommunicationException();
         }
 
     }
@@ -117,8 +121,9 @@ public class CommunicationCenter {
     public void removePlayer(String p){
         try{
             sender.removeAsPlayer(p);
-        }catch (IOException e){
+        }catch (IOException|NoConnectionMadeException e){
             e.printStackTrace();
+            signalCommunicationException();
         }
     }
 
@@ -130,9 +135,18 @@ public class CommunicationCenter {
     }
 
     public void handleResults(final String message){
-  mainActivity.showResultText(message);
+        mainActivity.showResultText(message);
 
 
 
+    }
+
+    public void receiveScores(Map<String, String> playersScores) {
+        mainActivity.showLeaderBoard(playersScores);
+    }
+    
+    public void signalCommunicationException(){
+        
+        mainActivity.popUpToastMessage("Something went wrong: reconnect or try changing the IP address");
     }
 }

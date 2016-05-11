@@ -1,5 +1,6 @@
 package be.kejcs.sadg.Classes;
 
+import android.os.Looper;
 import android.util.Log;
 
 import com.rabbitmq.client.*;
@@ -7,7 +8,9 @@ import com.rabbitmq.client.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
 /**
@@ -39,8 +42,10 @@ public class Receiver implements IReceiver {
                 //  while(true){
                 try{
                     setUpConnection();
-                }catch (IOException | TimeoutException e){
+                }catch (IOException | NoConnectionMadeException| TimeoutException e){
                     e.printStackTrace();
+                    Looper.prepare();
+                    communicationCenter.signalCommunicationException();
                 }
                 // }
             }
@@ -74,7 +79,7 @@ public class Receiver implements IReceiver {
 
 
 
-    public void setUpConnection()throws IOException, TimeoutException{
+    public void setUpConnection()throws IOException, TimeoutException, NoConnectionMadeException{
 
         if(connection != null){
             connection.close();
@@ -83,6 +88,9 @@ public class Receiver implements IReceiver {
         connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
+
+
+
         channel.exchangeDeclare(EXCHANGE_NAME, "direct");
         queueName = channel.queueDeclare().getQueue();
 
@@ -91,7 +99,7 @@ public class Receiver implements IReceiver {
         for(String k:keys){
             channel.queueBind(queueName,EXCHANGE_NAME,userId + "."+k);
         }
-        channel.queueBind(queueName,EXCHANGE_NAME,"broadCastStart"); //TODO BROADCAST
+        channel.queueBind(queueName, EXCHANGE_NAME, "broadCastStart"); //TODO BROADCAST
 
         Consumer consumer = new DefaultConsumer(channel){
             @Override
@@ -102,17 +110,15 @@ public class Receiver implements IReceiver {
 
                 if(key.equals("broadCastStart")){
                     communicationCenter.startRound();//TODO BROADCAST
+                }else if(key.equals("scores")) {
+                    // Map<PlayerName,ScoreInString> players scores
+                    Map<String, String> playersScores = new HashMap<String, String>();
+                    for(String playerAndScore : message.split("/")){
+                        String[] playerScoreDivided = message.split(",");
+                        playersScores.put(playerScoreDivided[0],playerScoreDivided[1]);
+                    }
+                    communicationCenter.receiveScores(playersScores);
                 }
-            }
-            else if(key.equals("scores")) {
-                // Map<PlayerName,ScoreInString> players scores
-                Map<String, String> playersScores = new HashMap<String, String>();
-                for(String playerAndScore : message.split("/")){
-                    String[] playerScoreDivided = message.split(",");
-                    playersScores.put(playerScoreDivided[0],playerScoreDivided[1]);
-                }
-                communicationCenter.receiveScores(playersScores);
-            }
                 else {
 
                     String[] splitted = key.split("\\.");
@@ -137,12 +143,14 @@ public class Receiver implements IReceiver {
                         communicationCenter.setSystemTime(message);
                     }
                 }
-
-
-
-                System.out.println("Received: " + envelope.getRoutingKey() + ": " + message + ".");
-                //communicationCenter.setSong(music);
             }
+
+
+
+
+
+                //communicationCenter.setSong(music);
+
         };
 
         channel.basicConsume(queueName, true, consumer);
