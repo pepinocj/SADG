@@ -12,6 +12,10 @@ public class RegularMode extends GameMode {
 		int nbOfSongsNeeded = players.size()/2;
 		System.out.println("nb of songs needed = " + nbOfSongsNeeded);
 		ArrayList<Integer> songs = songPicker.pickSongs(nbOfSongsNeeded, gameState.level, gameState.genre);
+		System.out.println("we picked these songs: ");
+		for(Integer song : songs){
+			System.out.println(song);
+		}
 		System.out.println("We picked these songs: " + songs.toString());
 		songs.addAll(songs); 
 		assert(players.size() == songs.size());

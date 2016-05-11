@@ -69,6 +69,8 @@ public class Game {
 	public void startNewRound(){
 
 		System.out.println("Start new round with assignment:");
+		
+		
 		successCount = 0;
 		
 		if(((currentState.players.size()) % 2 )==1){

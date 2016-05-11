@@ -10,6 +10,10 @@ public class MolMode extends GameMode {
 		ArrayList<Person> players = gameState.getPlayers();
 		int nbOfSongsNeeded = players.size()/2  ;
 		ArrayList<Integer> songs = songPicker.pickSongs(nbOfSongsNeeded, gameState.level, gameState.genre);
+		System.out.println("we picked these songs: ");
+		for(Integer song : songs){
+			System.out.println(song);
+		}
 		songs.addAll(songs);
 		songs.add(0);
 		assert(players.size() == songs.size());
