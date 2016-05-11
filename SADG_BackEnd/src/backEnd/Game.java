@@ -6,8 +6,8 @@ import java.util.concurrent.TimeoutException;
 
 public class Game {
 
-	final static int maxSuccessCount = 1;
-	final static int maxRoundCount = 1;
+	int maxSuccessCount = 1;
+	int maxRoundCount = 1;
 
 	GameState currentState;
 	GameMode gameMode;
@@ -46,9 +46,17 @@ public class Game {
 	}
 
 	public void addPlayer(String namePerson){
-		Person person = new Person(namePerson);
-		currentState.addPlayer(person);
-		System.out.println("Person " + person.getUserName() + " was added.");
+		Person person = new Person(namePerson.split(":")[1]);
+		if(currentState.players.contains(person)){
+			sender.chooseNewName(namePerson.split(":")[0], "not ok");
+			System.out.println("person with name " + namePerson.split(":")[1] + "  already exists");
+		}
+		else{
+			currentState.addPlayer(person);
+			sender.chooseNewName(namePerson.split(":")[0], "ok");
+			System.out.println("Person " + person.getUserName() + " was added.");
+		}
+		
 	}
 
 	public void removePlayer(String namePerson){

@@ -173,14 +173,14 @@ public class Sender implements ISender {
 	}
 
 	@Override
-	public void chooseNewName(String id) {
-		String message = "Please chose another username.";
-		String designatedKey = id + ".username";
+	public void chooseNewName(String id, String message) {
+		//String message = "Please chose another username.";
+		String designatedKey = id;
 		try {
 			channel.basicPublish(EXCHANGE_NAME, designatedKey, null, message.getBytes());
 		} catch (IOException e) {
 			System.out.println("Failed to send request for changing name to user: " + id +". Trying again.");
-			chooseNewName(id);
+			chooseNewName(id, message);
 		}
 	}
 
