@@ -12,7 +12,7 @@ public abstract class GameMode {
 		for( Person player : players){
 			int size = songs.size();
 			int random = (int) Math.random()*size;
-			result.put(player.getUserName(),songs.get(random));
+			result.put(player.getQueue(),songs.get(random));
 			songs.remove(random);
 		}
 		return result;

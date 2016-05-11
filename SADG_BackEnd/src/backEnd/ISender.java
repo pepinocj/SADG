@@ -35,4 +35,7 @@ public interface ISender {
 	public abstract void removeUser(String name);
 
 	public void sendScoreBoard(Map<String, Integer> scores);
+	
+	public abstract void confirmAdded(String q);
+	
 }

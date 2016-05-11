@@ -68,7 +68,7 @@ public class GameState {
 		
 		for( Person person :players){
 			scores.put(person.getUserName(), person.getScore());
-			System.out.println(person.getUserName() + person.getScore());
+			System.out.println(person.getUserName()+ " "  + person.getScore());
 		}
 		return scores;
 	}

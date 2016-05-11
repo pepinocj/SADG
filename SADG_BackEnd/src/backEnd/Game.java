@@ -6,8 +6,8 @@ import java.util.concurrent.TimeoutException;
 
 public class Game {
 
-	final static int maxSuccessCount = 1;
-	final static int maxRoundCount = 1;
+	int maxSuccessCount = 1;
+	int maxRoundCount = 1;
 
 	GameState currentState;
 	GameMode gameMode;
@@ -48,11 +48,13 @@ public class Game {
 	public void addPlayer(String namePerson){
 		Person person = new Person(namePerson);
 		if(currentState.players.contains(person)){
+			sender.chooseNewName(namePerson.split(":")[0]);
 			System.out.println("person already exists");
 		}
 		else{
 			currentState.addPlayer(person);
 			System.out.println("Person " + person.getUserName() + " was added.");
+			sender.confirmAdded(person.getQueue());
 		}
 		
 	}
@@ -60,8 +62,8 @@ public class Game {
 	public void removePlayer(String namePerson){
 		currentState.removePlayer(namePerson);
 		//Lelijke fix maar nodig voor consistentie tenzij bij senden altijd playerlist wordt doorgestuurd.
-		sender.removeUser(namePerson);
-		System.out.println("Person " + namePerson + " was removed.");
+		sender.removeUser(namePerson.split(":")[0]);
+		System.out.println("Person " + namePerson.split(":")[1] + " was removed.");
 	}
 
 	public void startNewRound(){
@@ -157,7 +159,7 @@ public class Game {
 				highScore = entry.getValue();
 			}
 		}
-		return leader;
+		return leader.split(":")[1];
 	}
 
 

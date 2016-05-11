@@ -184,4 +184,16 @@ public class Sender implements ISender {
 		}
 	}
 
+	@Override
+	public void confirmAdded(String q) {
+		String message = "Successfully added.";
+		String designatedKey = q + ".okname";
+		try {
+			channel.basicPublish(EXCHANGE_NAME, designatedKey, null, message.getBytes());
+		} catch (IOException e) {
+			System.out.println("Failed to send acknowledgment for adding a user: " + q +". Trying again.");
+			confirmAdded(q);
+		}
+	}
+
 }

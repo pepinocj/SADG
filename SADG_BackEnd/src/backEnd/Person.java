@@ -19,14 +19,17 @@ public class Person implements Comparable<Person>{
 	}
 	
 	public String getUserName(){
-		return userName;
+		return this.userName.split(":")[1];
 	}
 
 	public boolean equals(Object obj){
 		if(obj instanceof Person)
 		{
 		   Person otherPerson = (Person) obj;
-		   if(this.userName.equals(otherPerson.userName)){return true;}
+		   String thisName = this.userName.split(":")[1];
+		   String otherName = otherPerson.userName.split(":")[1];
+
+		   if(thisName.equals(otherName)){return true;}
 		   else {return false;}
 		}
 		else
@@ -41,5 +44,9 @@ public class Person implements Comparable<Person>{
 		int compareScore = comparePerson.getScore();
 		//descending order
 		return this.getScore() - compareScore;
+	}
+
+	public String getQueue() {
+		return this.userName.split(":")[0];
 	}
 }
