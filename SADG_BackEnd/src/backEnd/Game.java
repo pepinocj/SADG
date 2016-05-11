@@ -46,12 +46,14 @@ public class Game {
 	}
 
 	public void addPlayer(String namePerson){
-		Person person = new Person(namePerson);
+		Person person = new Person(namePerson.split(":")[1]);
 		if(currentState.players.contains(person)){
-			System.out.println("person already exists");
+			sender.chooseNewName(namePerson.split(":")[0], "not ok");
+			System.out.println("person with name " + namePerson.split(":")[1] + "  already exists");
 		}
 		else{
 			currentState.addPlayer(person);
+			sender.chooseNewName(namePerson.split(":")[0], "ok");
 			System.out.println("Person " + person.getUserName() + " was added.");
 		}
 		

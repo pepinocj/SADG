@@ -26,7 +26,7 @@ public interface ISender {
 	
 	public abstract void reportVerification(String id1, String id2, boolean stateOfSuccess);
 	
-	public abstract void chooseNewName(String id);
+	public abstract void chooseNewName(String id, String message);
 	
 	//Eenmaal spelen gedaan is: sluiten van communicatie
 	public abstract void closeCommunication();
