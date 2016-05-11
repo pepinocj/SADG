@@ -6,8 +6,8 @@ import java.util.concurrent.TimeoutException;
 
 public class Game {
 
-	final static int maxSuccessCount = 1;
-	final static int maxRoundCount = 1;
+	int maxSuccessCount = 1;
+	int maxRoundCount = 1;
 
 	GameState currentState;
 	GameMode gameMode;
