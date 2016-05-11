@@ -38,6 +38,15 @@ public class GameState {
 		players.add(person); //TODO fix this
 	}
 	
+	public ArrayList<String> getPlayerStrings(){
+		ArrayList<String> result =  new ArrayList<String>();
+		for(Person person : players){
+			result.add(person.getUserName());
+		}
+		return result;
+	}
+	
+	
 	public void removePlayer(String name){
 		for(int i=0; i<players.size(); i++){
 			if(players.get(i).getUserName().equals(name)){

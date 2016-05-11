@@ -1,6 +1,7 @@
 package backEnd;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
@@ -110,10 +111,11 @@ public class Game {
 
 
 	public void verifyMatch(String pers1, String pers2) throws IOException{
-		if(!currentState.players.contains(pers1)){
+		ArrayList<String> players = currentState.getPlayerStrings();
+		if(!players.contains(pers1)){
 			System.out.println("OMG speler " + pers1 + "(eerste) is illegaal whaat");
 		}
-		else if(!currentState.players.contains(pers2)){
+		else if(!players.contains(pers2)){
 			System.out.println("OMG speler " + pers2 + "(tweede) is illegaal whaat");
 		}
 		
