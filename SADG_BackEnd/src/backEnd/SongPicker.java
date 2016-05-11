@@ -77,8 +77,6 @@ public class SongPicker {
 
 	
 	private ArrayList<Song> filter(ArrayList<Song> temp, Level level, Genre genre) {
-//		public enum Level {
-//			ALL, EASY, MEDIUM, HARD};
 		int distDance = 0;
 		 switch (level) {
          case ALL: return temp;
