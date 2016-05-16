@@ -3,10 +3,12 @@ package backEnd;
 public class Person implements Comparable<Person>{
 	
 	private String userName;
+	private String androidId;
 	private int score = 0;
 	
-	public Person( String userName){
+	public Person( String userName, String androidId){
 		this.userName = userName;
+		this.androidId = androidId;
 		
 	}
 
@@ -14,6 +16,10 @@ public class Person implements Comparable<Person>{
 		return score;
 	}
 
+	public String getAndroidId(){
+		return androidId;
+	}
+	
 	public void setScore(int score) {
 		this.score = score;
 	}

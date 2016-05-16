@@ -47,18 +47,30 @@ public class Game {
 	}
 
 	public void addPlayer(String namePerson){
-		Person person = new Person(namePerson.split(":")[1]);
+		Person person = new Person(namePerson.split(":")[1], namePerson.split(":")[0]);
 		System.out.println("Trying to add player " + person);
 		if(currentState.players.contains(person)){
 			sender.chooseNewName(namePerson.split(":")[0], "not ok");
 			System.out.println("person with name " + namePerson.split(":")[1] + "  already exists");
 		}
 		else{
-			currentState.addPlayer(person);
-			sender.chooseNewName(namePerson.split(":")[0], "ok");
-			System.out.println("Person " + person.getUserName() + " was added.");
+			String androidId = person.getAndroidId();
+			boolean check = true;
+			for(Person pl: currentState.players){
+				if(androidId == pl.getAndroidId()){
+					sender.chooseNewName(namePerson.split(":")[0], "not ok");
+					System.out.println("person with androidId " + namePerson.split(":")[0] + "  tried to register twice with different name.");
+					check = false;
+					break;
+				}
+			}
+			if(check){
+				currentState.addPlayer(person);
+				sender.chooseNewName(namePerson.split(":")[0], "ok");
+				System.out.println("Person " + person.getUserName() + " was added.");
+			}
 		}
-		
+
 	}
 
 	public void removePlayer(String namePerson){
@@ -71,20 +83,20 @@ public class Game {
 	public void startNewRound(){
 
 		System.out.println("Start new round with assignment:");
-		
-		
+
+
 		successCount = 0;
-		
+
 		if(((currentState.players.size()) % 2 )==1){
 			System.out.println("changing to molmode");
 			gameMode = new MolMode();
-			
+
 		}
-		
+
 		Map<String, Integer> songAssignments = songAssigner.assignSongs(gameMode, currentState);
 		long systemTime =  System.currentTimeMillis();
-		
-		
+
+
 
 		if(!(startFirstRound > 0)){
 			startFirstRound = System.currentTimeMillis();
@@ -118,8 +130,8 @@ public class Game {
 		else if(!players.contains(pers2)){
 			System.out.println("OMG speler " + pers2 + "(tweede) is illegaal whaat");
 		}
-		
-		
+
+
 		MatchType successType = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
 		boolean success = false;
 		if(successType == MatchType.SUCCESS){
