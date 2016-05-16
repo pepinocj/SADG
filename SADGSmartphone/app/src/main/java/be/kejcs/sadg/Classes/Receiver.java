@@ -87,6 +87,7 @@ public class Receiver implements IReceiver {
             connection.close();
 
         }
+        this.connectionFactory.setHost(player.ip);
         connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
@@ -103,6 +104,7 @@ public class Receiver implements IReceiver {
         }
 
         channel.queueBind(queueName, EXCHANGE_NAME, "broadCastStart"); //TODO BROADCAST
+        channel.queueBind(queueName, EXCHANGE_NAME, "scores");
         channel.queueBind(queueName, EXCHANGE_NAME, userId);
         Consumer consumer = new DefaultConsumer(channel){
             @Override
@@ -119,11 +121,13 @@ public class Receiver implements IReceiver {
 
                 }else if(key.equals("scores")) {
                     // Map<PlayerName,ScoreInString> players scores
+                    Log.d("ShowLeaderBoard",message);
                     Map<String, String> playersScores = new HashMap<String, String>();
                     for(String playerAndScore : message.split("/")){
                         String[] playerScoreDivided = playerAndScore.split(",");
                         playersScores.put(playerScoreDivided[0],playerScoreDivided[1]);
                     }
+
                     communicationCenter.receiveScores(playersScores);
                 }
                 else {

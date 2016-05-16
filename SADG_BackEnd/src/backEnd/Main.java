@@ -46,7 +46,7 @@ public class Main {
 		    }
 		    else if (command.equals("players")) {
 		    	for( Person person : game.currentState.players){
-		    		System.out.println(person.getUserName().split(":")[1]);
+		    		System.out.println(person.getUserName());
 
 		    	}
 		    }

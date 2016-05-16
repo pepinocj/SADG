@@ -5,9 +5,11 @@
     <application android:name="be.kejcs.sadg.SleepJournalApp" android:allowBackup="true" android:label="Socially Awkward Dancing Game"
         android:icon="@mipmap/ic_launcher" android:theme="@style/AppTheme">
         <uses-permission android:name="android.permission.CAMERA" />
+        <uses-permission android:name="android.permission.WAKE_LOCK" />
 
         <activity android:name="be.kejcs.sadg.MainActivity"
-            android:label="SADG">
+            android:label="SADG"
+            android:screenOrientation="portrait">
             <!-- The intent-filter below makes sure this activity is launched when launching the app -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

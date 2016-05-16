@@ -1,13 +1,18 @@
 package be.kejcs.sadg.Classes;
 
 import android.os.Looper;
+import android.util.Pair;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
 import com.rabbitmq.client.ConnectionFactory;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
@@ -130,33 +135,77 @@ public class CommunicationCenter {
     }
 
     public void handleVerifyResults(final String message){
-        mainActivity.showVerifyResultText(message);
 
-
-
+        mainActivity.runOnUiThread(new Runnable() {
+                                       public void run() {
+                                           mainActivity.showVerifyResultText(message);
+                                       }
+                                   }
+        );
     }
+
+
 
     public void handleResults(final String message){
-        mainActivity.showResultText(message);
-
-
-
-    }
-
-    public void receiveScores(Map<String, String> playersScores) {
-        mainActivity.showLeaderBoard(playersScores);
-    }
-    
-    public void signalCommunicationException(){
-        
-        mainActivity.popUpToastMessage("Something went wrong: reconnect or try changing the IP address");
-    }
-
-    public void handleAcknowledgement(boolean ok){
-        if(ok){
-            mainActivity.popUpToastMessage("You are registered!");
-        }else{
-            mainActivity.popUpToastMessage("You're name is already in use! >:(  CHANGE IT");
+        mainActivity.runOnUiThread(new Runnable() {
+                                       public void run() {
+                                           mainActivity.showResultText(message);
+                                       }
+                                   }
+            );
         }
-    }
-}
+
+
+
+
+            public void receiveScores(final Map<String, String> playersScores) {
+                List<Pair<String,String>> scores = new ArrayList<>();
+
+                for (String s: playersScores.keySet()){
+                    scores.add(new Pair<>(s,playersScores.get(s)));
+                }
+
+                Collections.sort(scores, new Comparator<Pair<String, String>>() {
+                    @Override
+                    public int compare(Pair<String, String> lhs, Pair<String, String> rhs) {
+                        return rhs.second.compareTo(lhs.second);
+                    }
+                });
+
+                final List<Pair<String,String>> f_scores = new ArrayList<>(scores);
+
+                mainActivity.runOnUiThread(new Runnable() {
+                                               public void run() {
+                                                   mainActivity.showLeaderBoard(f_scores);
+                                               }
+                                           }
+                );
+
+            }
+
+            public void signalCommunicationException() {
+
+                mainActivity.runOnUiThread(new Runnable() {
+                                               public void run() {
+                                                   mainActivity.popUpToastMessage("Something went wrong: reconnect or try changing the IP address");
+                                               }
+                                           }
+                );
+
+            }
+
+            public void handleAcknowledgement(final boolean ok) {
+                mainActivity.runOnUiThread(new Runnable() {
+                    public void run() {
+                        String ack;
+                        if (ok) {
+                            ack = "You are registered!";
+                        } else {
+                            ack = "You're name is already in use! >:(  CHANGE IT";
+                        }
+                        Toast.makeText(mainActivity, ack, Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+            }
+        }

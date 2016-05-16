@@ -1,6 +1,7 @@
 package be.kejcs.sadg.Classes;
 
 import android.os.Looper;
+import android.util.Log;
 
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -63,6 +64,7 @@ public class Sender implements  ISender{
             connection.close();
 
         }
+        this.connectionFactory.setHost(player.ip);
         connection = this.connectionFactory.newConnection();
         //Opstellen van channel
         channel = connection.createChannel();
@@ -89,7 +91,7 @@ public class Sender implements  ISender{
     @Override
     public void sendVerify(String id1, String id2) throws IOException, NoConnectionMadeException {
         String message = id1+","+id2;
-        if(channel == null){
+        if(channel == null|| !connection.isOpen()){
             throw new NoConnectionMadeException();
         }
         channel.basicPublish(EXCHANGE_NAME, "verify", null, message.getBytes());
@@ -98,7 +100,7 @@ public class Sender implements  ISender{
     @Override
     public void beginAsPlayer(String id) throws IOException, NoConnectionMadeException {
 
-        if(channel == null){
+        if(channel == null || !connection.isOpen()){
             throw new NoConnectionMadeException();
         }
 
@@ -118,9 +120,10 @@ public class Sender implements  ISender{
 
         @Override
         public void removeAsPlayer(String id) throws IOException, NoConnectionMadeException {
-            if(channel == null){
+            if(channel == null|| !connection.isOpen()){
                 throw new NoConnectionMadeException();
             }
+                Log.d("REMOVE", "REMOVING AS PLAYER");
                 channel.basicPublish(EXCHANGE_NAME,"removePlayer", null, id.getBytes());
             }
 }

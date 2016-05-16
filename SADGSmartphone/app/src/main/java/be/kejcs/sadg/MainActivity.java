@@ -12,11 +12,13 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -68,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         reconnect = (Button) findViewById(R.id.reconnect);
         buttonStop = (Button) findViewById(R.id.buttonStop);
 
@@ -147,6 +150,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void unregister(View v){
+
         communicationCenter.removePlayer(player.name);
     }
 
@@ -249,14 +253,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanResult != null) {
-            Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
-            //tvExtraInfo.setText(scanResult.getContents());
-            communicationCenter.lastScanTime =System.currentTimeMillis();
-            communicationCenter.verify(player.name, scanResult.getContents());
+        if (scanResult != null ) {
+            if (!(scanResult.getContents()+"").equals("null")){
+                Toast.makeText(this, "Result : "+scanResult.getContents(), Toast.LENGTH_LONG).show();
+                //tvExtraInfo.setText(scanResult.getContents());
+                communicationCenter.lastScanTime =System.currentTimeMillis();
+                communicationCenter.verify(player.name, scanResult.getContents());
 
 
-            communicationCenter.hasScannedInThisRound = true;
+                communicationCenter.hasScannedInThisRound = true;
+            }
+
         }
 
     }
@@ -270,13 +277,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void popUpToastMessage(String s){
+
         Toast.makeText(this, s, Toast.LENGTH_LONG).show();
     }
 
-    public void showLeaderBoard(Map<String,String> lb){
+    public void showLeaderBoard(List<Pair<String,String>> lb){
+        Log.d("ShowLeaderBoard", lb.toString());
         String result = "";
-        for(String s:lb.keySet()){
-            result = result + s + ": " + lb.get(s)+" \n";
+        for(Pair s:lb){
+            result = result + s.first + ": " + s.second+" \n";
         }
 
         tvExtraInfo.setText(result);
