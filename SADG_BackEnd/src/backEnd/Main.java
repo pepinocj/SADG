@@ -28,6 +28,7 @@ public class Main {
 	    System.out.println("Write \"quit\" to quit the game.");
 	    System.out.println("Write \"level\" to choose the difficulty of the game.");
 	    System.out.println("Write \"players\" to get the current players.");
+	    System.out.println("Write \"remove\" to remove the current players.");
 	    System.out.println("Write \"rounds\" to choose the number of rounds.");
 	    System.out.println("Write \"matches\" to choose the number of succesful matches before a round stops.");
 
@@ -50,6 +51,16 @@ public class Main {
 
 		    	}
 		    }
+		   
+		    else if (command.equals("remove")) {
+		    	game.currentState.players.clear();
+		    	System.out.println("Current players checkprint:");
+		    	for( Person person : game.currentState.players){
+		    		System.out.println(person.getUserName());
+
+		    	}
+		    }
+		    
 		    else if (command.equals("rounds")) {
 		    	System.out.println("How many rounds?");
 		    	String roundsString = scanner.next().toLowerCase();
