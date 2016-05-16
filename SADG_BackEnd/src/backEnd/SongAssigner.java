@@ -19,6 +19,7 @@ public class SongAssigner {
 		for( Person player : players){
 			int size = songs.size();
 			int random = (int) Math.random()*size;
+			System.out.println("random nummer = " + random);
 			result.put(player.getUserName(),songs.get(random));
 			songs.remove(random);
 		}
