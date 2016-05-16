@@ -123,7 +123,7 @@ public class Sender implements  ISender{
             if(channel == null|| !connection.isOpen()){
                 throw new NoConnectionMadeException();
             }
-                Log.d("REMOVE", "REMOVING AS PLAYER");
+                Log.d("REMOVE", "REMOVING AS PLAYER "+id);
                 channel.basicPublish(EXCHANGE_NAME,"removePlayer", null, id.getBytes());
             }
 }
