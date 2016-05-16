@@ -2,6 +2,7 @@ package backEnd;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Random;
 
 public class SongAssigner {
 	
@@ -18,7 +19,9 @@ public class SongAssigner {
 		Map<String,Integer> result = Collections.<String,Integer>emptyMap(); 
 		for( Person player : players){
 			int size = songs.size();
-			int random = (int) Math.random()*size;
+			Random r = new Random();
+			int random = r.nextInt(size);
+			//System.out.println("random nummer = " + random);
 			result.put(player.getUserName(),songs.get(random));
 			songs.remove(random);
 		}
