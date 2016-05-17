@@ -9,7 +9,7 @@ import com.rabbitmq.client.*;
 public class Receiver implements IReceiver {
 
 	private static final String EXCHANGE_NAME = "game_info";
-	private static final List<String> keys = Arrays.asList("verify", "addPlayer"); 
+	private static final List<String> keys = Arrays.asList("verify", "addPlayer","removePlayer"); 
 
 	private ConnectionFactory factory;
 	private Connection connection;

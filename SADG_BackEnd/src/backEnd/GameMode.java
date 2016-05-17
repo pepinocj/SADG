@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public abstract class GameMode {
 
+	Random r = new Random();
+	
 	public Map<String, Integer> assignToPlayers(ArrayList<Integer> songs, ArrayList<Person> players) {
 		Map<String,Integer> result = new HashMap<String,Integer>(); 
 		for( Person player : players){
 			int size = songs.size();
-			int random = (int) Math.random()*size;
+			int random = r.nextInt(size);
+			System.out.println(player.getUserName()+": "+songs.get(random));
 			result.put(player.getUserName(),songs.get(random));
 			songs.remove(random);
 		}
