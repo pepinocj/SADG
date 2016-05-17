@@ -84,8 +84,8 @@ public class Sender implements ISender {
 
 	@Override
 	public void announceWinner(String person) {
-		String congrats = "Congratulations! You won this round!";
-		String nope = "The round is finished, but you are not first. Better luck next time!";
+		String congrats = "ok";
+		String nope = "nok";
 		for(String id: userIds){
 			if(person == id ){
 				String designatedChannel = id + ".results";
@@ -133,7 +133,7 @@ public class Sender implements ISender {
 	public void reportVerification(String id1, String id2,
 			boolean stateOfSuccess) {
 		if(stateOfSuccess){
-			String congrats = "Congrats, you found your partner!";
+			String congrats = "ok";
 			String designatedChannel1 = id1 + ".verifyResults";
 			String designatedChannel2 = id2 + ".verifyResults";
 			
@@ -147,7 +147,7 @@ public class Sender implements ISender {
 
 		}
 		else{
-			String oeps = "This is not the right partner!";
+			String oeps = "nok";
 			String designatedChannel1 = id1 + ".verifyResults";
 			String designatedChannel2 = id2 + ".verifyResults";
 			try {
@@ -162,9 +162,9 @@ public class Sender implements ISender {
 
 	@Override
 	public void reportMolVerification(String mol, String victim) {
-		String congrats = "Congrats, you deceived someone";
+		String congrats = "ok";
 		String designatedChannel1 = mol + ".verifyResults";
-		String oeps = "You were fooled!";
+		String oeps = "nok";
 		String designatedChannel2 = victim + ".verifyResults";
 		try {
 			channel.basicPublish(EXCHANGE_NAME, designatedChannel1, null, congrats.getBytes());

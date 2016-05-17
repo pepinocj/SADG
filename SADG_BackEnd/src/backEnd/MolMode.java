@@ -24,8 +24,8 @@ public class MolMode extends GameMode {
 	public MatchType handleScore( String pers1, String pers2, GameState currentState) {
 		int secondsPassed = (int) ((System.currentTimeMillis() - currentState.timeStarted) /1000);
 		System.out.println("seconds passed: " + secondsPassed);
-		boolean pers1IsMol = currentState.getSongAssignments().get(pers1).equals("0"); //TODO verander naar echte molsongcode
-		boolean pers2IsMol = currentState.getSongAssignments().get(pers2).equals("0");// niet zo mooie code sorry :(
+		boolean pers1IsMol = currentState.getSongAssignments().get(pers1).equals(0); //TODO verander naar echte molsongcode
+		boolean pers2IsMol = currentState.getSongAssignments().get(pers2).equals(0);// niet zo mooie code sorry :(
 
 		if(pers1IsMol || pers2IsMol){
 			System.out.println("Successful molmatch!");

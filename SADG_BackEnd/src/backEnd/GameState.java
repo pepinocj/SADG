@@ -30,7 +30,7 @@ public class GameState {
 	public GameState() {
 		players = new ArrayList<Person>();
 		genre = Genre.ALL;
-		level = Level.ALL;
+		level = Level.EASY;
 	}
 	
 

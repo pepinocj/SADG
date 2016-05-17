@@ -7,7 +7,7 @@ import java.util.concurrent.TimeoutException;
 
 public class Game {
 
-	int maxSuccessCount = 1;
+	int maxSuccessCount = 2;
 	int maxRoundCount = 1;
 
 	GameState currentState;
@@ -115,68 +115,71 @@ public class Game {
 		} catch(InterruptedException ex) {
 			Thread.currentThread().interrupt();
 		}
+		
 		sender.startRound(timeToStart);
 		currentState.setSongAssignments(songAssignments);
 		currentState.setStartTime(timeToStart); 
 		System.out.println("Start groovin'!");
+		System.out.println("timetostart " + timeToStart);
 	}
 
 
 	public void verifyMatch(String pers1, String pers2) throws IOException{
 		ArrayList<String> players = currentState.getPlayerStrings();
 		if(!players.contains(pers1)){
-			System.out.println("OMG speler " + pers1 + "(eerste) is illegaal whaat");
+			System.out.println("OMG speler " + pers1 + " is illegaal whaat");
 		}
 		else if(!players.contains(pers2)){
-			System.out.println("OMG speler " + pers2 + "(tweede) is illegaal whaat");
-		}
-
-
-		MatchType successType = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
-		boolean success = false;
-		if(successType == MatchType.SUCCESS){
-			System.out.println("oh boy what a succes");
-			successCount++ ;
-			success = true; }
-
-		if (successType == MatchType.MOLMATCH){
-			System.out.println("molmatch!");
-			successCount++ ;
-			String mol;
-			String victim;
-			if(currentState.getSongAssignments().get(pers1).equals("MolSong")){
-				mol = pers1;
-				victim = pers2;
-			}
-			else{
-				mol = pers2;
-				victim =pers1;}
-			System.out.println("the traitor is " + mol + " and the victim is " + "victim");
-			sender.reportMolVerification(mol, victim);
+			System.out.println("OMG speler " + pers2 + " is illegaal whaat");
 		}
 
 		else{
-			System.out.println("No match, too bad bruh");
-			sender.reportVerification(pers1, pers2, success); //delete for better performance
-		}
-		System.out.println("Verification: " +successType);
-
-
-		if(successCount >= maxSuccessCount){
-			String leader = getLeader();
-			System.out.println("the leader is " + leader);
-			sender.announceWinner(leader); // delete for better performance
-			sender.sendScoreBoard(getScores());
-			sender.stopRound();
-			roundCount++;
-			System.out.println("the roundcount is " + roundCount);
-			if(roundCount <= maxRoundCount){
-				this.startNewRound();
+			MatchType successType = scoreHandler.handleScore(gameMode, pers1, pers2, currentState);
+			boolean success = false;
+			if(successType == MatchType.SUCCESS){
+				System.out.println("oh boy what a succes");
+				successCount++ ;
+				success = true; }
+	
+			if (successType == MatchType.MOLMATCH){
+				System.out.println("molmatch!");
+				successCount++ ;
+				String mol;
+				String victim;
+				if(currentState.getSongAssignments().get(pers1).equals("MolSong")){
+					mol = pers1;
+					victim = pers2;
+				}
+				else{
+					mol = pers2;
+					victim =pers1;}
+				System.out.println("the traitor is " + mol + " and the victim is " + "victim");
+				sender.reportMolVerification(mol, victim);
 			}
-			//TODO end of game mooier afhandelen
+	
 			else{
-				System.out.println("Game Over! Congratulations, "+ getLeader());}
-			roundCount = 0;
+				System.out.println("No match, too bad bruh");
+				sender.reportVerification(pers1, pers2, success); //delete for better performance
+			}
+			System.out.println("Verification: " +successType);
+	
+	
+			if(successCount >= maxSuccessCount){
+				String leader = getLeader();
+				System.out.println("the leader is " + leader);
+				sender.announceWinner(leader); // delete for better performance
+				sender.sendScoreBoard(getScores());
+				sender.stopRound();
+				roundCount++;
+				System.out.println("the roundcount is " + roundCount);
+				if(roundCount <= maxRoundCount){
+					this.startNewRound();
+				}
+				//TODO end of game mooier afhandelen
+				else{
+					System.out.println("Game Over! Congratulations, "+ getLeader());}
+				roundCount = 0; //LOL
+			}
 		}
 	}
 
